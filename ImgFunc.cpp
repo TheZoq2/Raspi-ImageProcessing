@@ -22,10 +22,10 @@ int ImgFunc::getPixelStart(int x, int y, int rows, int cols, int channels)
     return pixelStart;
 }
 
-Vec2 ImgFunc::getCoordsFromPixel(int pixel, int rows)
+Vec2 ImgFunc::getCoordsFromPixel(int pixel, int rows, int cols)
 {
     Vec2 result;
-    result.val[0] = (pixel % rows) + 1;
+    result.val[0] = (pixel % cols) + 1;
     result.val[1] = floor(pixel /(float) rows);
 
     return result;

@@ -118,6 +118,7 @@ int main()
             //Color tracker object for tracking objects
             ColorTracker ct;
             cv::Mat image;
+            cv::Mat pathImg(cv::Size(frameWidth, frameHeight), CV_8UC1,  cv::Scalar(0));
 
             bool capturing = true;
 
@@ -136,7 +137,6 @@ int main()
 
                 std::cout << "Found object in: " << ct.getMiddlePos().getString() << std::endl;
                 //storing the result in an image
-                cv::Mat pathImg(cv::Size(frameWidth, frameHeight), CV_8UC1,  cv::Scalar(0));
                 uint8_t* pathData = pathImg.data;
            
                 int pixelPos = ImgFunc::getPixelStart(ct.getMiddlePos().val[0], ct.getMiddlePos().val[1], frameWidth, frameHeight, 1);

@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/frans/Documents/cpp/raspicam/objectTracking
+CMAKE_SOURCE_DIR = /home/frans/Documents/cpp/car/camera/objectTracking
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/frans/Documents/cpp/raspicam/objectTracking/build
+CMAKE_BINARY_DIR = /home/frans/Documents/cpp/car/camera/objectTracking/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/objectTracking.dir/depend.make
@@ -51,17 +51,17 @@ include CMakeFiles/objectTracking.dir/flags.make
 
 CMakeFiles/objectTracking.dir/main.cpp.o: CMakeFiles/objectTracking.dir/flags.make
 CMakeFiles/objectTracking.dir/main.cpp.o: ../main.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/frans/Documents/cpp/car/camera/objectTracking/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/objectTracking.dir/main.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/objectTracking.dir/main.cpp.o -c /home/frans/Documents/cpp/raspicam/objectTracking/main.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/objectTracking.dir/main.cpp.o -c /home/frans/Documents/cpp/car/camera/objectTracking/main.cpp
 
 CMakeFiles/objectTracking.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/objectTracking.dir/main.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/frans/Documents/cpp/raspicam/objectTracking/main.cpp > CMakeFiles/objectTracking.dir/main.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/frans/Documents/cpp/car/camera/objectTracking/main.cpp > CMakeFiles/objectTracking.dir/main.cpp.i
 
 CMakeFiles/objectTracking.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/objectTracking.dir/main.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/frans/Documents/cpp/raspicam/objectTracking/main.cpp -o CMakeFiles/objectTracking.dir/main.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/frans/Documents/cpp/car/camera/objectTracking/main.cpp -o CMakeFiles/objectTracking.dir/main.cpp.s
 
 CMakeFiles/objectTracking.dir/main.cpp.o.requires:
 .PHONY : CMakeFiles/objectTracking.dir/main.cpp.o.requires
@@ -74,17 +74,17 @@ CMakeFiles/objectTracking.dir/main.cpp.o.provides.build: CMakeFiles/objectTracki
 
 CMakeFiles/objectTracking.dir/Vec2.cpp.o: CMakeFiles/objectTracking.dir/flags.make
 CMakeFiles/objectTracking.dir/Vec2.cpp.o: ../Vec2.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/frans/Documents/cpp/car/camera/objectTracking/build/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/objectTracking.dir/Vec2.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/objectTracking.dir/Vec2.cpp.o -c /home/frans/Documents/cpp/raspicam/objectTracking/Vec2.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/objectTracking.dir/Vec2.cpp.o -c /home/frans/Documents/cpp/car/camera/objectTracking/Vec2.cpp
 
 CMakeFiles/objectTracking.dir/Vec2.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/objectTracking.dir/Vec2.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/frans/Documents/cpp/raspicam/objectTracking/Vec2.cpp > CMakeFiles/objectTracking.dir/Vec2.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/frans/Documents/cpp/car/camera/objectTracking/Vec2.cpp > CMakeFiles/objectTracking.dir/Vec2.cpp.i
 
 CMakeFiles/objectTracking.dir/Vec2.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/objectTracking.dir/Vec2.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/frans/Documents/cpp/raspicam/objectTracking/Vec2.cpp -o CMakeFiles/objectTracking.dir/Vec2.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/frans/Documents/cpp/car/camera/objectTracking/Vec2.cpp -o CMakeFiles/objectTracking.dir/Vec2.cpp.s
 
 CMakeFiles/objectTracking.dir/Vec2.cpp.o.requires:
 .PHONY : CMakeFiles/objectTracking.dir/Vec2.cpp.o.requires
@@ -97,17 +97,17 @@ CMakeFiles/objectTracking.dir/Vec2.cpp.o.provides.build: CMakeFiles/objectTracki
 
 CMakeFiles/objectTracking.dir/Vec3.cpp.o: CMakeFiles/objectTracking.dir/flags.make
 CMakeFiles/objectTracking.dir/Vec3.cpp.o: ../Vec3.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/frans/Documents/cpp/car/camera/objectTracking/build/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/objectTracking.dir/Vec3.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/objectTracking.dir/Vec3.cpp.o -c /home/frans/Documents/cpp/raspicam/objectTracking/Vec3.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/objectTracking.dir/Vec3.cpp.o -c /home/frans/Documents/cpp/car/camera/objectTracking/Vec3.cpp
 
 CMakeFiles/objectTracking.dir/Vec3.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/objectTracking.dir/Vec3.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/frans/Documents/cpp/raspicam/objectTracking/Vec3.cpp > CMakeFiles/objectTracking.dir/Vec3.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/frans/Documents/cpp/car/camera/objectTracking/Vec3.cpp > CMakeFiles/objectTracking.dir/Vec3.cpp.i
 
 CMakeFiles/objectTracking.dir/Vec3.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/objectTracking.dir/Vec3.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/frans/Documents/cpp/raspicam/objectTracking/Vec3.cpp -o CMakeFiles/objectTracking.dir/Vec3.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/frans/Documents/cpp/car/camera/objectTracking/Vec3.cpp -o CMakeFiles/objectTracking.dir/Vec3.cpp.s
 
 CMakeFiles/objectTracking.dir/Vec3.cpp.o.requires:
 .PHONY : CMakeFiles/objectTracking.dir/Vec3.cpp.o.requires
@@ -120,17 +120,17 @@ CMakeFiles/objectTracking.dir/Vec3.cpp.o.provides.build: CMakeFiles/objectTracki
 
 CMakeFiles/objectTracking.dir/ColorTracker.cpp.o: CMakeFiles/objectTracking.dir/flags.make
 CMakeFiles/objectTracking.dir/ColorTracker.cpp.o: ../ColorTracker.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles $(CMAKE_PROGRESS_4)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/frans/Documents/cpp/car/camera/objectTracking/build/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/objectTracking.dir/ColorTracker.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/objectTracking.dir/ColorTracker.cpp.o -c /home/frans/Documents/cpp/raspicam/objectTracking/ColorTracker.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/objectTracking.dir/ColorTracker.cpp.o -c /home/frans/Documents/cpp/car/camera/objectTracking/ColorTracker.cpp
 
 CMakeFiles/objectTracking.dir/ColorTracker.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/objectTracking.dir/ColorTracker.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/frans/Documents/cpp/raspicam/objectTracking/ColorTracker.cpp > CMakeFiles/objectTracking.dir/ColorTracker.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/frans/Documents/cpp/car/camera/objectTracking/ColorTracker.cpp > CMakeFiles/objectTracking.dir/ColorTracker.cpp.i
 
 CMakeFiles/objectTracking.dir/ColorTracker.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/objectTracking.dir/ColorTracker.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/frans/Documents/cpp/raspicam/objectTracking/ColorTracker.cpp -o CMakeFiles/objectTracking.dir/ColorTracker.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/frans/Documents/cpp/car/camera/objectTracking/ColorTracker.cpp -o CMakeFiles/objectTracking.dir/ColorTracker.cpp.s
 
 CMakeFiles/objectTracking.dir/ColorTracker.cpp.o.requires:
 .PHONY : CMakeFiles/objectTracking.dir/ColorTracker.cpp.o.requires
@@ -143,17 +143,17 @@ CMakeFiles/objectTracking.dir/ColorTracker.cpp.o.provides.build: CMakeFiles/obje
 
 CMakeFiles/objectTracking.dir/ImgFunc.cpp.o: CMakeFiles/objectTracking.dir/flags.make
 CMakeFiles/objectTracking.dir/ImgFunc.cpp.o: ../ImgFunc.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles $(CMAKE_PROGRESS_5)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/frans/Documents/cpp/car/camera/objectTracking/build/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/objectTracking.dir/ImgFunc.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/objectTracking.dir/ImgFunc.cpp.o -c /home/frans/Documents/cpp/raspicam/objectTracking/ImgFunc.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/objectTracking.dir/ImgFunc.cpp.o -c /home/frans/Documents/cpp/car/camera/objectTracking/ImgFunc.cpp
 
 CMakeFiles/objectTracking.dir/ImgFunc.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/objectTracking.dir/ImgFunc.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/frans/Documents/cpp/raspicam/objectTracking/ImgFunc.cpp > CMakeFiles/objectTracking.dir/ImgFunc.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/frans/Documents/cpp/car/camera/objectTracking/ImgFunc.cpp > CMakeFiles/objectTracking.dir/ImgFunc.cpp.i
 
 CMakeFiles/objectTracking.dir/ImgFunc.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/objectTracking.dir/ImgFunc.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/frans/Documents/cpp/raspicam/objectTracking/ImgFunc.cpp -o CMakeFiles/objectTracking.dir/ImgFunc.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/frans/Documents/cpp/car/camera/objectTracking/ImgFunc.cpp -o CMakeFiles/objectTracking.dir/ImgFunc.cpp.s
 
 CMakeFiles/objectTracking.dir/ImgFunc.cpp.o.requires:
 .PHONY : CMakeFiles/objectTracking.dir/ImgFunc.cpp.o.requires
@@ -166,17 +166,17 @@ CMakeFiles/objectTracking.dir/ImgFunc.cpp.o.provides.build: CMakeFiles/objectTra
 
 CMakeFiles/objectTracking.dir/BinMap.cpp.o: CMakeFiles/objectTracking.dir/flags.make
 CMakeFiles/objectTracking.dir/BinMap.cpp.o: ../BinMap.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles $(CMAKE_PROGRESS_6)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/frans/Documents/cpp/car/camera/objectTracking/build/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/objectTracking.dir/BinMap.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/objectTracking.dir/BinMap.cpp.o -c /home/frans/Documents/cpp/raspicam/objectTracking/BinMap.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/objectTracking.dir/BinMap.cpp.o -c /home/frans/Documents/cpp/car/camera/objectTracking/BinMap.cpp
 
 CMakeFiles/objectTracking.dir/BinMap.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/objectTracking.dir/BinMap.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/frans/Documents/cpp/raspicam/objectTracking/BinMap.cpp > CMakeFiles/objectTracking.dir/BinMap.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/frans/Documents/cpp/car/camera/objectTracking/BinMap.cpp > CMakeFiles/objectTracking.dir/BinMap.cpp.i
 
 CMakeFiles/objectTracking.dir/BinMap.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/objectTracking.dir/BinMap.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/frans/Documents/cpp/raspicam/objectTracking/BinMap.cpp -o CMakeFiles/objectTracking.dir/BinMap.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/frans/Documents/cpp/car/camera/objectTracking/BinMap.cpp -o CMakeFiles/objectTracking.dir/BinMap.cpp.s
 
 CMakeFiles/objectTracking.dir/BinMap.cpp.o.requires:
 .PHONY : CMakeFiles/objectTracking.dir/BinMap.cpp.o.requires
@@ -267,6 +267,6 @@ CMakeFiles/objectTracking.dir/clean:
 .PHONY : CMakeFiles/objectTracking.dir/clean
 
 CMakeFiles/objectTracking.dir/depend:
-	cd /home/frans/Documents/cpp/raspicam/objectTracking/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/frans/Documents/cpp/raspicam/objectTracking /home/frans/Documents/cpp/raspicam/objectTracking /home/frans/Documents/cpp/raspicam/objectTracking/build /home/frans/Documents/cpp/raspicam/objectTracking/build /home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles/objectTracking.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/frans/Documents/cpp/car/camera/objectTracking/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/frans/Documents/cpp/car/camera/objectTracking /home/frans/Documents/cpp/car/camera/objectTracking /home/frans/Documents/cpp/car/camera/objectTracking/build /home/frans/Documents/cpp/car/camera/objectTracking/build /home/frans/Documents/cpp/car/camera/objectTracking/build/CMakeFiles/objectTracking.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/objectTracking.dir/depend
 

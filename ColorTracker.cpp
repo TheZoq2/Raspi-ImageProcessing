@@ -105,7 +105,7 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
             {
                 pixelsFound++;
 
-                Vec2 pixelCoord = ImgFunc::getCoordsFromPixel(i, imgRows);
+                Vec2 pixelCoord = ImgFunc::getCoordsFromPixel(i, imgRows, imgCols);
                 sumPos.val[0] += pixelCoord.val[0];
                 sumPos.val[1] += pixelCoord.val[1];
             }

@@ -46,3 +46,31 @@ Vec3& Vec3::operator=(Vec3 arg)
     this->val[2] = arg.val[2];
     return *this;
 }
+Vec3& Vec3::operator+=(const Vec3 rhs)
+{
+    this->val[0] = this->val[0] + rhs.val[0];
+    this->val[1] = this->val[1] + rhs.val[1];
+    this->val[2] = this->val[2] + rhs.val[2];
+
+    return *this;
+}
+Vec3& Vec3::operator-=(const Vec3 rhs)
+{
+    this->val[0] = this->val[0] - rhs.val[0];
+    this->val[1] = this->val[1] - rhs.val[1];
+    this->val[2] = this->val[2] - rhs.val[2];
+
+    return *this;
+}
+const Vec3& Vec3::operator+(const Vec3& rhs)
+{
+    Vec3 result = *this;
+    result += rhs;
+    return result;
+}
+const Vec3& Vec3::operator-(const Vec3& rhs)
+{
+    Vec3 result = *this;
+    result -= rhs;
+    return result;
+}
