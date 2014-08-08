@@ -6,3 +6,29 @@
 
 #IncludeRegexTransform: 
 
+/home/frans/Documents/cpp/raspicam/objectTracking/BinMap.cpp
+BinMap.h
+/home/frans/Documents/cpp/raspicam/objectTracking/BinMap.h
+
+/home/frans/Documents/cpp/raspicam/objectTracking/BinMap.h
+ImgFunc.h
+/home/frans/Documents/cpp/raspicam/objectTracking/ImgFunc.h
+
+/home/frans/Documents/cpp/raspicam/objectTracking/ImgFunc.h
+Vec3.h
+/home/frans/Documents/cpp/raspicam/objectTracking/Vec3.h
+Vec2.h
+/home/frans/Documents/cpp/raspicam/objectTracking/Vec2.h
+opencv2/opencv.hpp
+-
+
+/home/frans/Documents/cpp/raspicam/objectTracking/Vec2.h
+string
+-
+stdio.h
+-
+
+/home/frans/Documents/cpp/raspicam/objectTracking/Vec3.h
+string
+-
+

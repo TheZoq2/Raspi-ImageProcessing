@@ -1,5 +1,10 @@
 file(REMOVE_RECURSE
   "CMakeFiles/objectTracking.dir/main.cpp.o"
+  "CMakeFiles/objectTracking.dir/Vec2.cpp.o"
+  "CMakeFiles/objectTracking.dir/Vec3.cpp.o"
+  "CMakeFiles/objectTracking.dir/ColorTracker.cpp.o"
+  "CMakeFiles/objectTracking.dir/ImgFunc.cpp.o"
+  "CMakeFiles/objectTracking.dir/BinMap.cpp.o"
   "objectTracking.pdb"
   "objectTracking"
 )

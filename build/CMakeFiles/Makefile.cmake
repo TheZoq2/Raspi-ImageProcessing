@@ -11,7 +11,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.0.0/CMakeCCompiler.cmake"
   "CMakeFiles/3.0.0/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.0.0/CMakeSystem.cmake"
-  "/home/frans/Documents/cpp/rpicam/raspicam-0.1.1/build/raspicamConfig.cmake"
+  "/home/frans/Documents/cpp/raspicam/raspicam-0.1.1/build/raspicamConfig.cmake"
   "/usr/share/cmake-3.0/Modules/CMakeCInformation.cmake"
   "/usr/share/cmake-3.0/Modules/CMakeCXXInformation.cmake"
   "/usr/share/cmake-3.0/Modules/CMakeCommonLanguageInclude.cmake"

@@ -1,0 +1,20 @@
+#include <string>
+#include <stdio.h>
+
+#ifndef H_VEC2
+#define H_VEC2
+
+class Vec2
+{
+public:
+    Vec2();
+    Vec2(float x, float y);
+
+    std::string getString();
+    bool getHasValue();
+    
+    float val[2];
+
+    Vec2& operator=(Vec2 arg);
+};
+#endif

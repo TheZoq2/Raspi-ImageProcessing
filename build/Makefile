@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/frans/Documents/cpp/rpicam/objectTracking
+CMAKE_SOURCE_DIR = /home/frans/Documents/cpp/raspicam/objectTracking
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/frans/Documents/cpp/rpicam/objectTracking/build
+CMAKE_BINARY_DIR = /home/frans/Documents/cpp/raspicam/objectTracking/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -73,9 +73,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/frans/Documents/cpp/rpicam/objectTracking/build/CMakeFiles /home/frans/Documents/cpp/rpicam/objectTracking/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles /home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/frans/Documents/cpp/rpicam/objectTracking/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -115,6 +115,126 @@ objectTracking/fast:
 	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/build
 .PHONY : objectTracking/fast
 
+BinMap.o: BinMap.cpp.o
+.PHONY : BinMap.o
+
+# target to build an object file
+BinMap.cpp.o:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/BinMap.cpp.o
+.PHONY : BinMap.cpp.o
+
+BinMap.i: BinMap.cpp.i
+.PHONY : BinMap.i
+
+# target to preprocess a source file
+BinMap.cpp.i:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/BinMap.cpp.i
+.PHONY : BinMap.cpp.i
+
+BinMap.s: BinMap.cpp.s
+.PHONY : BinMap.s
+
+# target to generate assembly for a file
+BinMap.cpp.s:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/BinMap.cpp.s
+.PHONY : BinMap.cpp.s
+
+ColorTracker.o: ColorTracker.cpp.o
+.PHONY : ColorTracker.o
+
+# target to build an object file
+ColorTracker.cpp.o:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/ColorTracker.cpp.o
+.PHONY : ColorTracker.cpp.o
+
+ColorTracker.i: ColorTracker.cpp.i
+.PHONY : ColorTracker.i
+
+# target to preprocess a source file
+ColorTracker.cpp.i:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/ColorTracker.cpp.i
+.PHONY : ColorTracker.cpp.i
+
+ColorTracker.s: ColorTracker.cpp.s
+.PHONY : ColorTracker.s
+
+# target to generate assembly for a file
+ColorTracker.cpp.s:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/ColorTracker.cpp.s
+.PHONY : ColorTracker.cpp.s
+
+ImgFunc.o: ImgFunc.cpp.o
+.PHONY : ImgFunc.o
+
+# target to build an object file
+ImgFunc.cpp.o:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/ImgFunc.cpp.o
+.PHONY : ImgFunc.cpp.o
+
+ImgFunc.i: ImgFunc.cpp.i
+.PHONY : ImgFunc.i
+
+# target to preprocess a source file
+ImgFunc.cpp.i:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/ImgFunc.cpp.i
+.PHONY : ImgFunc.cpp.i
+
+ImgFunc.s: ImgFunc.cpp.s
+.PHONY : ImgFunc.s
+
+# target to generate assembly for a file
+ImgFunc.cpp.s:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/ImgFunc.cpp.s
+.PHONY : ImgFunc.cpp.s
+
+Vec2.o: Vec2.cpp.o
+.PHONY : Vec2.o
+
+# target to build an object file
+Vec2.cpp.o:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/Vec2.cpp.o
+.PHONY : Vec2.cpp.o
+
+Vec2.i: Vec2.cpp.i
+.PHONY : Vec2.i
+
+# target to preprocess a source file
+Vec2.cpp.i:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/Vec2.cpp.i
+.PHONY : Vec2.cpp.i
+
+Vec2.s: Vec2.cpp.s
+.PHONY : Vec2.s
+
+# target to generate assembly for a file
+Vec2.cpp.s:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/Vec2.cpp.s
+.PHONY : Vec2.cpp.s
+
+Vec3.o: Vec3.cpp.o
+.PHONY : Vec3.o
+
+# target to build an object file
+Vec3.cpp.o:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/Vec3.cpp.o
+.PHONY : Vec3.cpp.o
+
+Vec3.i: Vec3.cpp.i
+.PHONY : Vec3.i
+
+# target to preprocess a source file
+Vec3.cpp.i:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/Vec3.cpp.i
+.PHONY : Vec3.cpp.i
+
+Vec3.s: Vec3.cpp.s
+.PHONY : Vec3.s
+
+# target to generate assembly for a file
+Vec3.cpp.s:
+	$(MAKE) -f CMakeFiles/objectTracking.dir/build.make CMakeFiles/objectTracking.dir/Vec3.cpp.s
+.PHONY : Vec3.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -148,6 +268,21 @@ help:
 	@echo "... edit_cache"
 	@echo "... objectTracking"
 	@echo "... rebuild_cache"
+	@echo "... BinMap.o"
+	@echo "... BinMap.i"
+	@echo "... BinMap.s"
+	@echo "... ColorTracker.o"
+	@echo "... ColorTracker.i"
+	@echo "... ColorTracker.s"
+	@echo "... ImgFunc.o"
+	@echo "... ImgFunc.i"
+	@echo "... ImgFunc.s"
+	@echo "... Vec2.o"
+	@echo "... Vec2.i"
+	@echo "... Vec2.s"
+	@echo "... Vec3.o"
+	@echo "... Vec3.i"
+	@echo "... Vec3.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

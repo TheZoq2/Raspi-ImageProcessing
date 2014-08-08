@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/frans/Documents/cpp/rpicam/objectTracking/main.cpp
+ctime
+-
+iostream
+-
+stdio.h
+-
+string
+-
+raspicam/raspicam_cv.h
+-
+opencv2/opencv.hpp
+-
+
+/usr/local/include/raspicam/raspicam_cv.h
+opencv2/core/core.hpp
+-
+opencv2/highgui/highgui.hpp
+-
+

@@ -1,4 +1,4 @@
-# Install script for directory: /home/frans/Documents/cpp/rpicam/objectTracking
+# Install script for directory: /home/frans/Documents/cpp/raspicam/objectTracking
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,7 +38,7 @@ else()
   set(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 endif()
 
-file(WRITE "/home/frans/Documents/cpp/rpicam/objectTracking/build/${CMAKE_INSTALL_MANIFEST}" "")
+file(WRITE "/home/frans/Documents/cpp/raspicam/objectTracking/build/${CMAKE_INSTALL_MANIFEST}" "")
 foreach(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  file(APPEND "/home/frans/Documents/cpp/rpicam/objectTracking/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  file(APPEND "/home/frans/Documents/cpp/raspicam/objectTracking/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 endforeach()

@@ -4,7 +4,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/frans/Documents/cpp/rpicam/objectTracking/main.cpp" "/home/frans/Documents/cpp/rpicam/objectTracking/build/CMakeFiles/objectTracking.dir/main.cpp.o"
+  "/home/frans/Documents/cpp/raspicam/objectTracking/BinMap.cpp" "/home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles/objectTracking.dir/BinMap.cpp.o"
+  "/home/frans/Documents/cpp/raspicam/objectTracking/ColorTracker.cpp" "/home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles/objectTracking.dir/ColorTracker.cpp.o"
+  "/home/frans/Documents/cpp/raspicam/objectTracking/ImgFunc.cpp" "/home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles/objectTracking.dir/ImgFunc.cpp.o"
+  "/home/frans/Documents/cpp/raspicam/objectTracking/Vec2.cpp" "/home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles/objectTracking.dir/Vec2.cpp.o"
+  "/home/frans/Documents/cpp/raspicam/objectTracking/Vec3.cpp" "/home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles/objectTracking.dir/Vec3.cpp.o"
+  "/home/frans/Documents/cpp/raspicam/objectTracking/main.cpp" "/home/frans/Documents/cpp/raspicam/objectTracking/build/CMakeFiles/objectTracking.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
