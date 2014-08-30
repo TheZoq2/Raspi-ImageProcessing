@@ -36,3 +36,33 @@ Vec2& Vec2::operator=(Vec2 arg)
     this->val[1] = arg.val[1];
     return *this;
 }
+Vec2& Vec2::operator+=(const Vec2 rhs)
+{
+    this->val[0] = this->val[0] + rhs.val[0];
+    this->val[1] = this->val[1] + rhs.val[1];
+}
+Vec2& Vec2::operator-=(const Vec2 rhs)
+{
+    this->val[0] = this->val[0] - rhs.val[0];
+    this->val[1] = this->val[1] - rhs.val[1];
+}
+const Vec2& Vec2::operator+(const Vec2& rhs)
+{
+    Vec2 result = *this;
+    result += rhs;
+    return result;
+}
+const Vec2& Vec2::operator-(const Vec2& rhs)
+{
+    Vec2 result = *this;
+    result -= rhs;
+    return result;
+}
+bool Vec2::operator==(const Vec2& other)
+{
+    if(other.val[0] == this->val[0] && other.val[1] == this->val[1])
+    {
+        return true;
+    }
+    return false;
+}

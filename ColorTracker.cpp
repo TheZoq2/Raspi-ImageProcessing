@@ -66,8 +66,19 @@ Vec3 ColorTracker::getObjectColor()
 
     return result;
 }
-void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddle)
+void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddle, bool calcSectors)
 {
+    hasSectors = calcSectors;
+    if(calcSectors == true)
+    {
+        if(sectors != NULL)
+        {
+            delete[] sectors;
+        }
+
+        //sectors = new int[secAmount][secAmount];
+    }
+
     //binaryImg.create(cv::Size(imgRows, imgCols), CV_8UC1);
     binaryImg.create(cv::Size(lastImg.cols, lastImg.rows), CV_8UC1);
 
@@ -109,6 +120,14 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
                 sumPos.val[0] += pixelCoord.val[0];
                 sumPos.val[1] += pixelCoord.val[1];
             }
+            if(calcSectors == true)
+            {
+
+            }
+        }
+        else
+        {
+            binaryData[i] = 100;
         }
     }
 
@@ -129,6 +148,18 @@ void ColorTracker::convertToHSV()
 
     isConverted = true;
 }
+void ColorTracker::generateBlobs()
+{
+    //Creating a new flooder
+    Flooder flooder(binaryImg);
+    flooder.flood();
+
+    blobs = flooder.getBlobs();
+}
+std::vector< Flooder::Blob > ColorTracker::getBlobs()
+{
+    return blobs;
+}
 
 void ColorTracker::saveImage(std::string filename)
 {
@@ -142,4 +173,9 @@ void ColorTracker::saveBinary(std::string filename)
 Vec2 ColorTracker::getMiddlePos()
 {
     return middlePos;
+}
+
+cv::Mat ColorTracker::getBinary()
+{
+    return binaryImg;
 }
