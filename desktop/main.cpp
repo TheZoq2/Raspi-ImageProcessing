@@ -62,12 +62,12 @@ int main()
 
         //Getting the blob data from the trackers
         ct.generateBlobs();
-//        std::vector< Flooder::Blob > blobs = ct.getBlobs();
+        std::vector< Flooder::Blob > blobs = ct.getBlobs();
         
         clock_t endTime = clock();
 
         std::cout << "Search took: " << (float)(endTime-startTime)/CLOCKS_PER_SEC << std::endl;
-//        std::cout << "Found: " << blobs.size() << " blobs" << std::endl;
+        std::cout << "Found: " << blobs.size() << " blobs" << std::endl;
 
         cv::imshow("Threshold img", ct.getBinary());
         cv::imshow("Display Image", img);

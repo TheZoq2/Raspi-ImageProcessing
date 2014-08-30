@@ -37,6 +37,8 @@ private:
     cv::Mat lastImg;
     cv::Mat hsvImg;
     cv::Mat binaryImg; 
+    
+    std::vector< std::vector< int > > binaryMap;
 
     bool isConverted;
 

@@ -68,6 +68,24 @@ Vec3 ColorTracker::getObjectColor()
 }
 void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddle, bool calcSectors)
 {
+    //Clearing the vector
+    for(unsigned int x = 0; x < binaryMap.size(); x++)
+    {
+        binaryMap.at(0).clear();
+    }
+    binaryMap.clear();
+
+    //Setting up the binary map
+    for(unsigned int x = 0; x < imgRows; x++)
+    {
+        std::vector< int > tmpVec;
+
+        binaryMap.push_back(tmpVec);
+        for(unsigned int y = 0; y < imgCols; y++)
+        {
+             binaryMap.at(x).push_back(0);
+        }
+    }
     hasSectors = calcSectors;
     if(calcSectors == true)
     {
@@ -119,6 +137,9 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
                 Vec2 pixelCoord = ImgFunc::getCoordsFromPixel(i, imgRows, imgCols);
                 sumPos.val[0] += pixelCoord.val[0];
                 sumPos.val[1] += pixelCoord.val[1];
+                    
+                //Adding the pixels to the binary map
+                binaryMap.at(pixelCoord.val[0]).at(pixelCoord.val[1]) = 1;
             }
             if(calcSectors == true)
             {
@@ -150,9 +171,12 @@ void ColorTracker::convertToHSV()
 }
 void ColorTracker::generateBlobs()
 {
+    std::cout << "Setting image" << std::endl;
     //Creating a new flooder
-    Flooder flooder(binaryImg);
+    Flooder flooder(binaryMap);
+    std::cout << "Set flooder img" << std::endl;
     flooder.flood();
+    std::cout << "Finished flood" << std::endl;
 
     blobs = flooder.getBlobs();
 }
