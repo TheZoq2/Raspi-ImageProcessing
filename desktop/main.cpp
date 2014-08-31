@@ -15,7 +15,7 @@ Vec3 redColor(1, 227, 218);
 Vec3 minRed;
 Vec3 maxRed;
 
-Vec3 threshold(15, 100, 100);
+Vec3 threshold(10, 100, 100);
 
 bool running = true;
 
@@ -32,8 +32,6 @@ int main()
     {
         std::cout << "Failed to open camera" << std::endl;
     }
-    camera.set(CV_CAP_PROP_FRAME_WIDTH, 320);
-    camera.set(CV_CAP_PROP_FRAME_HEIGHT, 240);
 
     //capture 1 image for use as reference
     cv::Mat ref;

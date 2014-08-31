@@ -1,4 +1,4 @@
-FILE(REMOVE_RECURSE
+file(REMOVE_RECURSE
   "CMakeFiles/tracking.dir/main.cpp.o"
   "CMakeFiles/tracking.dir/objectTracking/Flooder.cpp.o"
   "CMakeFiles/tracking.dir/objectTracking/Vec3.cpp.o"
@@ -11,6 +11,6 @@ FILE(REMOVE_RECURSE
 )
 
 # Per-language clean rules from dependency scanning.
-FOREACH(lang CXX)
-  INCLUDE(CMakeFiles/tracking.dir/cmake_clean_${lang}.cmake OPTIONAL)
-ENDFOREACH(lang)
+foreach(lang CXX)
+  include(CMakeFiles/tracking.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

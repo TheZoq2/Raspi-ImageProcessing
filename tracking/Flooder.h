@@ -3,7 +3,10 @@
 #include <stdlib.h>
 #include <iostream>
 
+#include <opencv2/opencv.hpp>
+
 #include "Vec2.h"
+#include "ImgFunc.h"
 
 #ifndef H_FLOODER
 #define H_FLOODER

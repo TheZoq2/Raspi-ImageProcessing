@@ -7,6 +7,10 @@ Flooder::Flooder(std::vector< std::vector< int > > map)
 
 void Flooder::flood()
 {
+    //Creating an image to store the locations of found blobs
+    cv::Mat foundImg;
+    foundImg.create(cv::Size(640, 480), CV_8UC1);
+    uint8_t* foundImgData = foundImg.data;
     //Create a copy of the map
     std::vector< std::vector< int > > mapCopy = mMap;
 
@@ -21,9 +25,14 @@ void Flooder::flood()
                 Blob searchResult = searchFrom(x, y, &mapCopy);
 
                 mBlobs.push_back(searchResult);
+
+                int pixelPos = ImgFunc::getPixelStart(x, y, 480, 640, 1);
+                foundImgData[pixelPos] = 255;
             }
         }
     }
+
+    cv::imshow("Debug1", foundImg);
 }
 
 Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > >* map)
@@ -142,8 +151,6 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
     result.height = maxY - minY;
     //float centerX = pixelAmount / 
 
-        //Finish calculation, set the found pixels to 0 and don't add 0 pixels
-        //to the open list;
     return result;
 }
 

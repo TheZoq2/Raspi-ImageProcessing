@@ -6,39 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/main.cpp
-stdio.h
--
-opencv2/opencv.hpp
--
-time.h
--
-unistd.h
--
-objectTracking/ColorTracker.h
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/objectTracking/ColorTracker.h
-objectTracking/Flooder.h
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/objectTracking/Flooder.h
-
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/objectTracking/ColorTracker.h
-iostream
--
-string
--
-opencv2/opencv.hpp
--
-vector
--
-Vec3.h
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/objectTracking/Vec3.h
-Vec2.h
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/objectTracking/Vec2.h
-ImgFunc.h
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/objectTracking/ImgFunc.h
+/home/frans/Documents/cpp/openCV/Raspi-ImageProcessing/desktop/objectTracking/Flooder.cpp
 Flooder.h
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/objectTracking/Flooder.h
+/home/frans/Documents/cpp/openCV/Raspi-ImageProcessing/desktop/objectTracking/Flooder.h
 
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/objectTracking/Flooder.h
+/home/frans/Documents/cpp/openCV/Raspi-ImageProcessing/desktop/objectTracking/Flooder.h
 vector
 -
 deque
@@ -47,24 +19,28 @@ stdlib.h
 -
 iostream
 -
+opencv2/opencv.hpp
+-
 Vec2.h
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/objectTracking/Vec2.h
+/home/frans/Documents/cpp/openCV/Raspi-ImageProcessing/desktop/objectTracking/Vec2.h
+ImgFunc.h
+/home/frans/Documents/cpp/openCV/Raspi-ImageProcessing/desktop/objectTracking/ImgFunc.h
 
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/objectTracking/ImgFunc.h
+/home/frans/Documents/cpp/openCV/Raspi-ImageProcessing/desktop/objectTracking/ImgFunc.h
 Vec3.h
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/objectTracking/Vec3.h
+/home/frans/Documents/cpp/openCV/Raspi-ImageProcessing/desktop/objectTracking/Vec3.h
 Vec2.h
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/objectTracking/Vec2.h
+/home/frans/Documents/cpp/openCV/Raspi-ImageProcessing/desktop/objectTracking/Vec2.h
 opencv2/opencv.hpp
 -
 
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/objectTracking/Vec2.h
+/home/frans/Documents/cpp/openCV/Raspi-ImageProcessing/desktop/objectTracking/Vec2.h
 string
 -
 stdio.h
 -
 
-/home/frans/Documents/Cpp/opencv/Raspi-ImageProcessing/desktop/objectTracking/Vec3.h
+/home/frans/Documents/cpp/openCV/Raspi-ImageProcessing/desktop/objectTracking/Vec3.h
 string
 -
 
