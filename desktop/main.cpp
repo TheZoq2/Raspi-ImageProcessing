@@ -9,11 +9,17 @@
 Vec3 targetColor(29, 227, 218);
 Vec3 minColor;
 Vec3 maxColor;
-Vec3 redColor(170, 227, 218);
+Vec3 redColor(1, 227, 218);
 Vec3 minRed;
 Vec3 maxRed;
 
-Vec3 threshold(10, 100, 100);
+Vec3 threshold(15, 100, 100);
+
+bool running = true;
+
+//Used as a safe way of shutting down the program since ctrl+c doesn't stop
+//using the webcam
+void onMouse(int event, int x, int y, int, void*);
 
 int main()
 {
@@ -23,6 +29,8 @@ int main()
     {
         std::cout << "Failed to open camera" << std::endl;
     }
+    camera.set(CV_CAP_PROP_FRAME_WIDTH, 320);
+    camera.set(CV_CAP_PROP_FRAME_HEIGHT, 240);
 
     //capture 1 image for use as reference
     cv::Mat ref;
@@ -37,12 +45,16 @@ int main()
     minRed = redColor - threshold;
     maxRed = redColor + threshold;
 
+    cv::namedWindow("GUI");
+    cv::setMouseCallback("GUI", onMouse);
+
+
     cv::namedWindow("Threshold img");
     cv::moveWindow("Threshold img", 450, 50);
     cv::namedWindow("red img");
     cv::moveWindow("red img", 50, 450);
     usleep(1000);
-    bool running = true;
+
     while(running == true)
     {
         cv::Mat img;
@@ -61,8 +73,18 @@ int main()
 
 
         //Getting the blob data from the trackers
-        ct.generateBlobs();
-        std::vector< Flooder::Blob > blobs = ct.getBlobs();
+        rt.generateBlobs();
+        std::deque< Flooder::Blob > blobs = rt.getBlobs(100);
+
+        int maxBlobSize = 0;
+        for(unsigned int i = 0; i < blobs.size(); i++)
+        {
+            if(blobs.at(i).pixelAmount > maxBlobSize)
+            {
+                maxBlobSize = blobs.at(i).pixelAmount;
+            }
+        }
+        std::cout << "The biggset blob is: " << maxBlobSize << std::endl;
         
         clock_t endTime = clock();
 
@@ -77,4 +99,15 @@ int main()
     }
 
     return 0;
+}
+
+void onMouse(int event, int x, int y, int, void*)
+{
+    if(event != 1)
+    {
+        return;
+    }
+    
+    //Exiting the program
+    running = false;
 }

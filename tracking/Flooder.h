@@ -1,5 +1,7 @@
 #include <vector>
+#include <deque>
 #include <stdlib.h>
+#include <iostream>
 
 #include "Vec2.h"
 
@@ -20,12 +22,12 @@ public:
         int pixelAmount;
     };
     
-    std::vector<Blob> getBlobs();
+    std::deque<Blob> getBlobs();
 private:
     Blob searchFrom(int x, int y, std::vector< std::vector< int > >* map);
 
     std::vector< std::vector< int > > mMap;
 
-    std::vector<Blob> mBlobs;
+    std::deque<Blob> mBlobs;
 };
 #endif

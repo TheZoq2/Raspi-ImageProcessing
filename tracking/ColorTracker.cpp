@@ -75,17 +75,19 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
     }
     binaryMap.clear();
 
+
     //Setting up the binary map
-    for(unsigned int x = 0; x < imgRows; x++)
+    for(unsigned int x = 0; x < imgCols; x++)
     {
         std::vector< int > tmpVec;
 
         binaryMap.push_back(tmpVec);
-        for(unsigned int y = 0; y < imgCols; y++)
+        for(unsigned int y = 0; y < imgRows; y++)
         {
              binaryMap.at(x).push_back(0);
         }
     }
+
     hasSectors = calcSectors;
     if(calcSectors == true)
     {
@@ -137,9 +139,13 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
                 Vec2 pixelCoord = ImgFunc::getCoordsFromPixel(i, imgRows, imgCols);
                 sumPos.val[0] += pixelCoord.val[0];
                 sumPos.val[1] += pixelCoord.val[1];
-                    
-                //Adding the pixels to the binary map
-                binaryMap.at(pixelCoord.val[0]).at(pixelCoord.val[1]) = 1;
+                
+                
+                if(pixelCoord.val[0] > 0 && pixelCoord.val[0] < binaryMap.size() && pixelCoord.val[1] > 0 && pixelCoord.val[1] < binaryMap.at(pixelCoord.val[0]).size())
+                {
+                    //Adding the pixels to the binary map
+                    binaryMap.at(pixelCoord.val[0]).at(pixelCoord.val[1]) = 1;
+                }
             }
             if(calcSectors == true)
             {
@@ -171,18 +177,34 @@ void ColorTracker::convertToHSV()
 }
 void ColorTracker::generateBlobs()
 {
-    std::cout << "Setting image" << std::endl;
+    //std::cout << "Setting image" << std::endl;
     //Creating a new flooder
     Flooder flooder(binaryMap);
-    std::cout << "Set flooder img" << std::endl;
+    //std::cout << "Set flooder img" << std::endl;
     flooder.flood();
-    std::cout << "Finished flood" << std::endl;
+    //std::cout << "Finished flood" << std::endl;
 
     blobs = flooder.getBlobs();
 }
-std::vector< Flooder::Blob > ColorTracker::getBlobs()
+std::deque< Flooder::Blob > ColorTracker::getBlobs(int minSize)
 {
-    return blobs;
+    if(minSize == 0)
+    {
+        return blobs;
+    }
+    
+    //Creating a new vector with the result
+    std::deque< Flooder::Blob > result;
+    for(unsigned int i = 0; i < blobs.size(); i++)
+    {
+        //Checking if the blob is big enough
+        if(blobs.at(i).pixelAmount > minSize)
+        {
+            result.push_back(blobs.at(i));
+        }
+    }
+
+    return result;
 }
 
 void ColorTracker::saveImage(std::string filename)

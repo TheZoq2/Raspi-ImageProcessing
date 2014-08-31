@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project( tracking )
 find_package( OpenCV REQUIRED )
+
 set(SOURCES
     main.cpp
     objectTracking/Flooder.h
