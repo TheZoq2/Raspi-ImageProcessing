@@ -11,11 +11,11 @@ void Flooder::flood()
     std::vector< std::vector< int > > mapCopy = mMap;
 
     //Loop through the map
-    for(unsigned int x = 0; x < mapCopy.size(); x += 4)
+    for(unsigned int x = 0; x < mapCopy.size(); x += 1)
     {
-        for(unsigned int y = 0; y < mapCopy[x].size(); y += 4)
+        for(unsigned int y = 0; y < mapCopy[x].size(); y += 1)
         {
-            if(mMap[x][y] != 0)
+            if(mapCopy[x][y] != 0)
             {
                 //Start a search from that pixel
                 Blob searchResult = searchFrom(x, y, &mapCopy);
@@ -77,8 +77,8 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
 
                 
                 //preventing diagonal checks
-                //if(true || abs(cX) == 1 && abs(cY) == 1)
-                if(true)
+                if(abs(cX) == 1 && abs(cY) == 1)
+                //if(true)
                 {
                     Vec2 nPixel = cPixel + offsetPixel;
                     

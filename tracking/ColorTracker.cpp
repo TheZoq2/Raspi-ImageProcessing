@@ -30,6 +30,8 @@ void ColorTracker::setImage(cv::Mat img)
 
 Vec3 ColorTracker::getObjectColor()
 {
+    return getColorInPixel(Vec2(imgRows / 2, imgCols / 2));
+    /*
     Vec3 result;
 
     //Convert to HSV
@@ -59,6 +61,39 @@ Vec3 ColorTracker::getObjectColor()
 
     int avgSearchAmount = pow(avgSize * 2 + 1, 2);
 
+    for(int i = 0; i < 3; i++)
+    {
+        result.val[i] = colorSum.val[i] / avgSearchAmount;
+    }
+
+    return result;
+    */
+}
+Vec3 ColorTracker::getColorInPixel(Vec2 pixel)
+{
+    Vec3 result;
+
+    //Convert the image to HSV
+    convertToHSV();
+    uint8_t* hsvData = hsvImg.data;
+
+    Vec3 colorSum(0, 0, 0);
+    int avgSize = 5;
+    for(int x = -avgSize; x <= avgSize; x++)
+    {
+        for(int y = -avgSize; y <= avgSize; y++)
+        {
+            int pixelX = x + pixel.val[0];
+            int pixelY = y + pixel.val[1];
+
+            Vec3 pixel = ImgFunc::getPixel(hsvData, pixelX, pixelY, imgRows, imgCols, 3);
+
+            //Storing the pixel
+            colorSum += pixel;
+        }
+    }
+
+    int avgSearchAmount = pow(avgSize * 2 + 1, 2);
     for(int i = 0; i < 3; i++)
     {
         result.val[i] = colorSum.val[i] / avgSearchAmount;

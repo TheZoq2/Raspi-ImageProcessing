@@ -20,6 +20,7 @@ public:
     void setImage(cv::Mat img);
     
     Vec3 getObjectColor(); //Select the color in the center of the image
+    Vec3 getColorInPixel(Vec2 pixel);
     void generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddle, bool calcSectors = false);
     void convertToHSV();
 

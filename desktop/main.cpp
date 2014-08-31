@@ -6,6 +6,8 @@
 #include "objectTracking/ColorTracker.h"
 #include "objectTracking/Flooder.h"
 
+cv::VideoCapture camera(0);
+
 Vec3 targetColor(29, 227, 218);
 Vec3 minColor;
 Vec3 maxColor;
@@ -20,10 +22,11 @@ bool running = true;
 //Used as a safe way of shutting down the program since ctrl+c doesn't stop
 //using the webcam
 void onMouse(int event, int x, int y, int, void*);
+void selectColor(int event, int x, int y, int , void*);
+void setMinMaxColor(Vec3 target, Vec3* minColor, Vec3* maxColor, Vec3 threshold);
 
 int main()
 {
-    cv::VideoCapture camera(0);
 
     if(camera.isOpened() == false)
     {
@@ -48,6 +51,8 @@ int main()
     cv::namedWindow("GUI");
     cv::setMouseCallback("GUI", onMouse);
 
+    cv::namedWindow("Display Image");
+    cv::setMouseCallback("Display Image", selectColor);
 
     cv::namedWindow("Threshold img");
     cv::moveWindow("Threshold img", 450, 50);
@@ -74,7 +79,7 @@ int main()
 
         //Getting the blob data from the trackers
         rt.generateBlobs();
-        std::deque< Flooder::Blob > blobs = rt.getBlobs(100);
+        std::deque< Flooder::Blob > blobs = rt.getBlobs(0);
 
         int maxBlobSize = 0;
         for(unsigned int i = 0; i < blobs.size(); i++)
@@ -110,4 +115,32 @@ void onMouse(int event, int x, int y, int, void*)
     
     //Exiting the program
     running = false;
+}
+
+void selectColor(int event, int x, int y, int, void*)
+{
+    if(event != 1) //If this isn't a left click
+    {
+        return;
+    }
+
+    //Taking 1 image
+    cv::Mat ref;
+    camera >> ref;
+
+    //Create a color tracker to get the color
+    ColorTracker ct;
+    ct.setImage(ref);
+
+    redColor = ct.getColorInPixel(Vec2(x, y));
+    
+    //Recalculating the threshold
+    setMinMaxColor(redColor, &minRed, &maxRed, threshold);
+}
+
+
+void setMinMaxColor(Vec3 target, Vec3* minColor, Vec3* maxColor, Vec3 threshold)
+{
+    *minColor = target - threshold;
+    *maxColor = target + threshold;
 }
