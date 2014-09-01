@@ -174,8 +174,7 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
                 Vec2 pixelCoord = ImgFunc::getCoordsFromPixel(i, imgRows, imgCols);
                 sumPos.val[0] += pixelCoord.val[0];
                 sumPos.val[1] += pixelCoord.val[1];
-                
-                
+
                 if(pixelCoord.val[0] > 0 && pixelCoord.val[0] < binaryMap.size() && pixelCoord.val[1] > 0 && pixelCoord.val[1] < binaryMap.at(pixelCoord.val[0]).size())
                 {
                     //Adding the pixels to the binary map
@@ -199,6 +198,10 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
         middlePos.val[0] = sumPos.val[0] / pixelsFound;
         middlePos.val[1] = sumPos.val[1] / pixelsFound;
     }
+}
+void ColorTracker::drawCircle(Vec2 pos, float radius, cv::Scalar color)
+{
+    cv::circle(lastImg, cv::Point(pos.val[0], pos.val[1]), radius, color, -1, 8);
 }
 void ColorTracker::convertToHSV()
 {

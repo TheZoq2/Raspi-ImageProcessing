@@ -23,6 +23,7 @@ public:
     Vec3 getColorInPixel(Vec2 pixel);
     void generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddle, bool calcSectors = false);
     void convertToHSV();
+    void drawCircle(Vec2 pos, float radius, cv::Scalar color);
 
     void saveImage(std::string filename);
     void saveBinary(std::string filename);

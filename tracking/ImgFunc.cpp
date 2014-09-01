@@ -16,7 +16,7 @@ Vec3 ImgFunc::getPixel(uint8_t* data, int x, int y, int rows, int cols, int chan
 }
 int ImgFunc::getPixelStart(int x, int y, int rows, int cols, int channels)
 {
-    int rowIndex = (y-1) * cols * channels;
+    int rowIndex = (y-1) * rows * channels;
     int pixelStart = rowIndex + x * channels;
 
     return pixelStart;
@@ -26,7 +26,7 @@ Vec2 ImgFunc::getCoordsFromPixel(int pixel, int rows, int cols)
 {
     Vec2 result;
     result.val[0] = (pixel % cols) + 1;
-    result.val[1] = floor(pixel /(float) rows);
+    result.val[1] = floor(pixel /(float) cols);
 
     return result;
 }

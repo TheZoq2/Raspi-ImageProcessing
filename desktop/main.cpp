@@ -15,7 +15,7 @@ Vec3 redColor(1, 227, 218);
 Vec3 minRed;
 Vec3 maxRed;
 
-Vec3 threshold(1000, 1000, 1000);
+Vec3 threshold(10, 100, 100);
 
 bool running = true;
 
@@ -56,7 +56,7 @@ int main()
     cv::moveWindow("Threshold img", 450, 50);
     cv::namedWindow("red img");
     cv::moveWindow("red img", 50, 450);
-    usleep(1000);
+    //usleep(1000);
 
     while(running == true)
     {
@@ -77,7 +77,7 @@ int main()
 
         //Getting the blob data from the trackers
         rt.generateBlobs();
-        std::deque< Flooder::Blob > blobs = rt.getBlobs(0);
+        std::deque< Flooder::Blob > blobs = rt.getBlobs(250);
 
         int maxBlobSize = 0;
         for(unsigned int i = 0; i < blobs.size(); i++)
@@ -88,6 +88,11 @@ int main()
             }
         }
         std::cout << "The biggset blob is: " << maxBlobSize << std::endl;
+
+        for(unsigned int i = 0; i < blobs.size(); i++)
+        {
+            ct.drawCircle(blobs.at(i).center, 10, cv::Scalar(255, 0, 0));
+        }
         
         clock_t endTime = clock();
 
