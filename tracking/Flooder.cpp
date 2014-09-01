@@ -101,6 +101,7 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
                         {
                             //Checking if the pixel is already on the closed list
                             bool onList = false;
+                            /*
                             for(unsigned int i = 0; i < closedList.size(); i++)
                             {
                                 if(closedList.at(i) == nPixel)
@@ -109,6 +110,7 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
                                     break;
                                 }
                             }
+                            */
 
                             if(onList == false)
                             {
@@ -122,9 +124,6 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
                                 //Adding the found pixel position to the total
                                 //coords
                                 pixelSum += nPixel;
-                            }
-                            else
-                            {
                             }
                         }
                     }

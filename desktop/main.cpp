@@ -15,7 +15,7 @@ Vec3 redColor(1, 227, 218);
 Vec3 minRed;
 Vec3 maxRed;
 
-Vec3 threshold(10, 100, 100);
+Vec3 threshold(1000, 1000, 1000);
 
 bool running = true;
 
