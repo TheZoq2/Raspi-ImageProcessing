@@ -15,7 +15,7 @@ Vec3 redColor(1, 227, 218);
 Vec3 minRed;
 Vec3 maxRed;
 
-Vec3 threshold(10, 100, 100);
+Vec3 threshold(20, 100, 100);
 
 bool running = true;
 
@@ -53,9 +53,9 @@ int main()
     cv::setMouseCallback("Display Image", selectColor);
 
     cv::namedWindow("Threshold img");
-    cv::moveWindow("Threshold img", 450, 50);
-    cv::namedWindow("red img");
-    cv::moveWindow("red img", 50, 450);
+    cv::moveWindow("Threshold img", 0, 0);
+    //cv::namedWindow("red img");
+    //cv::moveWindow("red img", 50, 450);
     //usleep(1000);
 
     while(running == true)
@@ -70,14 +70,14 @@ int main()
         ct.setImage(img);
         ct.generateBinary(minColor, maxColor, true);
 
-        ColorTracker rt;
-        rt.setImage(img);
-        rt.generateBinary(minRed, maxRed, true);
+        //ColorTracker rt;
+        //rt.setImage(img);
+        //rt.generateBinary(minRed, maxRed, true);
 
 
         //Getting the blob data from the trackers
-        rt.generateBlobs();
-        std::deque< Flooder::Blob > blobs = rt.getBlobs(250);
+        ct.generateBlobs();
+        std::deque< Flooder::Blob > blobs = ct.getBlobs(250);
 
         int maxBlobSize = 0;
         for(unsigned int i = 0; i < blobs.size(); i++)
@@ -101,7 +101,6 @@ int main()
 
         cv::imshow("Threshold img", ct.getBinary());
         cv::imshow("Display Image", img);
-        cv::imshow("red img", rt.getBinary());
 
         cv::waitKey(10);
     }

@@ -36,8 +36,6 @@ void Flooder::flood()
             }
         }
     }
-
-    cv::imshow("Debug1", foundImg);
 }
 
 Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > >* map)
