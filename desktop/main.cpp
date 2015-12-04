@@ -23,7 +23,7 @@ bool running = true;
 //using the webcam
 void onMouse(int event, int x, int y, int, void*);
 void selectColor(int event, int x, int y, int , void*);
-void setMinMaxColor(Vec3 target, Vec3* minColor, Vec3* maxColor, Vec3 threshold);
+void setMinMaxColor(Vec3 target, Vec3& minColor, Vec3& maxColor, Vec3 threshold);
 
 int main()
 {
@@ -137,12 +137,12 @@ void selectColor(int event, int x, int y, int, void*)
     redColor = ct.getColorInPixel(Vec2(x, y));
     
     //Recalculating the threshold
-    setMinMaxColor(redColor, &minRed, &maxRed, threshold);
+    setMinMaxColor(redColor, minColor, maxColor, threshold);
 }
 
 
-void setMinMaxColor(Vec3 target, Vec3* minColor, Vec3* maxColor, Vec3 threshold)
+void setMinMaxColor(Vec3 target, Vec3& minColor, Vec3& maxColor, Vec3 threshold)
 {
-    *minColor = target - threshold;
-    *maxColor = target + threshold;
+    minColor = target - threshold;
+    maxColor = target + threshold;
 }
