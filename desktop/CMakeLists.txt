@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 2.8)
 project( tracking )
 find_package( OpenCV REQUIRED )
 
+set(CMAKE_BUILD_TYPE Debug)
+
+
+set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS} -g -ftest-coverage -fprofile-arcs -Wall -Wextra -Wno-unused -pedantic")
+
 set(SOURCES
     main.cpp
     objectTracking/Flooder.h
