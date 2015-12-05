@@ -63,22 +63,6 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
         pixelSum += cPixel;
         
         bool inBounds = true;
-        /*if(cPixel.val[0] < minX)
-        {
-            inBounds = false;
-        }
-        if(cPixel.val[1] < minY)
-        {
-            inBounds = false;
-        }
-        if(cPixel.val[0] > maxX)
-        {
-            inBounds = false;
-        }
-        if(cPixel.val[1] > maxY)
-        {
-            inBounds = false;
-        }*/
         
         //Adding all the pixels next to the current pixel to the open list
         for(int cX = -1; cX <= 1; cX++)
@@ -89,8 +73,7 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
 
                 
                 //preventing diagonal checks
-                if(abs(cX) == 1 && abs(cY) == 1)
-                //if(true)
+                //if(abs(cX) == 1 && abs(cY) == 1)
                 {
                     Vec2 nPixel = cPixel + offsetPixel;
                     
@@ -104,16 +87,6 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
                         {
                             //Checking if the pixel is already on the closed list
                             bool onList = false;
-                            /*
-                            for(unsigned int i = 0; i < closedList.size(); i++)
-                            {
-                                if(closedList.at(i) == nPixel)
-                                {
-                                    onList = true;
-                                    break;
-                                }
-                            }
-                            */
 
                             if(onList == false)
                             {
@@ -151,7 +124,6 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
     //calculating the width and height
     result.width = maxX - minX;
     result.height = maxY - minY;
-    //float centerX = pixelAmount / 
 
     return result;
 }
