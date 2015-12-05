@@ -104,10 +104,6 @@ Vec3 ColorTracker::getColorInPixel(Vec2 pixel)
 void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddle, bool calcSectors)
 {
     //Clearing the vector
-    for(unsigned int x = 0; x < binaryMap.size(); x++)
-    {
-        binaryMap.at(0).clear();
-    }
     binaryMap.clear();
 
 
@@ -119,7 +115,7 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
         binaryMap.push_back(tmpVec);
         for(unsigned int y = 0; y < imgRows; y++)
         {
-             binaryMap.at(x).push_back(0);
+             binaryMap.at(x).push_back(1);
         }
     }
 
@@ -178,7 +174,7 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
                 if(pixelCoord.val[0] > 0 && pixelCoord.val[0] < binaryMap.size() && pixelCoord.val[1] > 0 && pixelCoord.val[1] < binaryMap.at(pixelCoord.val[0]).size())
                 {
                     //Adding the pixels to the binary map
-                    binaryMap.at(pixelCoord.val[0]).at(pixelCoord.val[1]) = 1;
+                    binaryMap.at(pixelCoord.val[0]).at(pixelCoord.val[1]) = 0;
                 }
             }
             if(calcSectors == true)

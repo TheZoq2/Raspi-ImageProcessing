@@ -16,7 +16,7 @@ Vec3 ImgFunc::getPixel(uint8_t* data, int x, int y, int rows, int cols, int chan
 }
 int ImgFunc::getPixelStart(int x, int y, int rows, int cols, int channels)
 {
-    int rowIndex = (y-1) * rows * channels;
+    int rowIndex = (y) * rows * channels;
     int pixelStart = rowIndex + x * channels;
 
     return pixelStart;
