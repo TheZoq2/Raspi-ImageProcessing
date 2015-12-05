@@ -63,8 +63,8 @@ int main()
         cv::Mat img;
         camera >> img;
 
+        //Fix fisheye problems
         cv::Mat tmpImg;
-
 
         //// Read Camera Parameters //////
         cv::Mat camera_matrix, distortion;
@@ -73,11 +73,6 @@ int main()
         fn["camera_matrix"] >> camera_matrix;
         fn["distortion"] >> distortion;
 
-        //CvMat kMatrix = cvMat( 3, 3, CV_32FC1, kArray);
-
-        //cv::Mat dMatrix = cvMat( 3, 3, CV_32FC1, dArray);
-
-        //cv::fisheye::undistortImage(img, tmpImg, camera_matrix, distortion, camera_matrix);
         cv::undistort(img, tmpImg, camera_matrix, distortion);
 
         img = tmpImg;
