@@ -6,7 +6,7 @@
 #include "objectTracking/ColorTracker.h"
 #include "objectTracking/Flooder.h"
 
-cv::VideoCapture camera(0);
+cv::VideoCapture camera(1);
 
 Vec3 targetColor(29, 227, 218);
 Vec3 minColor;
@@ -15,7 +15,7 @@ Vec3 redColor(1, 227, 218);
 Vec3 minRed;
 Vec3 maxRed;
 
-Vec3 threshold(20, 100, 100);
+Vec3 threshold(30, 100, 100);
 
 bool running = true;
 
@@ -62,6 +62,25 @@ int main()
     {
         cv::Mat img;
         camera >> img;
+
+        cv::Mat tmpImg;
+
+
+        //// Read Camera Parameters //////
+        cv::Mat camera_matrix, distortion;
+        cv::FileStorage fs("fisheye0.txt", cv::FileStorage::READ);
+        cv::FileNode fn = fs["IntParam"];
+        fn["camera_matrix"] >> camera_matrix;
+        fn["distortion"] >> distortion;
+
+        //CvMat kMatrix = cvMat( 3, 3, CV_32FC1, kArray);
+
+        //cv::Mat dMatrix = cvMat( 3, 3, CV_32FC1, dArray);
+
+        //cv::fisheye::undistortImage(img, tmpImg, camera_matrix, distortion, camera_matrix);
+        cv::undistort(img, tmpImg, camera_matrix, distortion);
+
+        img = tmpImg;
         
         clock_t startTime = clock();
 
@@ -77,7 +96,7 @@ int main()
 
         //Getting the blob data from the trackers
         ct.generateBlobs();
-        std::deque< Flooder::Blob > blobs = ct.getBlobs(250);
+        std::deque< Flooder::Blob > blobs = ct.getBlobs(60);
 
         int maxBlobSize = 0;
         for(unsigned int i = 0; i < blobs.size(); i++)
