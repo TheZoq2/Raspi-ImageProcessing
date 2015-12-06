@@ -8,15 +8,15 @@ void Pool::setTargetBall(Vec2 targetBall)
 {
     this->targetBall = targetBall;
 }
-void Pool::setHole(Vec2 hole)
+void Pool::setPocket(Vec2 pocket)
 {
-    this->hole = hole;
+    this->pocket = pocket;
 }
 
 float Pool::getHitAngle() 
 {
     //Calculating the angle of the vector that the target needs to travel
-    Vec2 targetDiff = hole - targetBall;
+    Vec2 targetDiff = pocket - targetBall;
 
     float targetAngle = targetDiff.getAngle();
 

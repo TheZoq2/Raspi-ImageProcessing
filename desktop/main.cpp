@@ -322,7 +322,7 @@ void runSelect(float x, float y)
             if(holeY > 0.5)
                 holeX = 0.5;
 
-            pool.setHole(coordinateConverter->convertTo(Vec2(holeX, holeY)));
+            pool.setPocket(coordinateConverter->convertTo(Vec2(holeX, holeY)));
             selState = WHITE_BALL;
             state = PLAY;
             break;
