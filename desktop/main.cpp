@@ -212,8 +212,8 @@ void mainLoop()
     for(unsigned int i = 0; i < blobs.size(); i++)
     {
         ct.drawCircle(blobs.at(i).center, 5, cv::Scalar(255, 0, 0));
-    }
-
+    }   
+    //cv::circle(currentImage, cv::Point(20, 30), 20, cv::Scalar(20, 30,255), -1, 8);
     cv::Mat displayImage = currentImage;
 
     if(state == PLAY)
