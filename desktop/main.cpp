@@ -13,8 +13,8 @@
 
 enum PROGRAM_STATE
 {
-    SELECT_COLOR,
-    SELECT_BALL,
+    WAIT_FOR_SELECT,
+    SELECT_PARAMETERS,
 };
 
 cv::VideoCapture camera(1);
@@ -38,8 +38,11 @@ void onMouse(int event, int x, int y, int, void*);
 void selectColor(int event, int x, int y, int , void*);
 void setMinMaxColor(Vec3 target, Vec3& minColor, Vec3& maxColor, Vec3 threshold);
 
+void mainLoop();
 
 std::unique_ptr<CoordinateConverter> coordinateConverter;
+
+cv::Mat currentImage;
 
 int main()
 {
@@ -88,58 +91,64 @@ int main()
 
     while(running == true)
     {
-        cv::Mat img;
-        camera >> img;
-
-        //Fix fisheye problems
-        cv::Mat tmpImg;
-
-        //Read fisheye correction stuff from a file. Generate using the "cpp/calibration" sample
-        cv::Mat camera_matrix, distortion;
-        cv::FileStorage fs("fisheye0.txt", cv::FileStorage::READ);
-        cv::FileNode fn = fs["IntParam"];
-        fn["camera_matrix"] >> camera_matrix;
-        fn["distortion"] >> distortion;
-
-        cv::undistort(img, tmpImg, camera_matrix, distortion);
-
-        img = tmpImg;
-        
-        //clock_t startTime = clock();
-
-        //Colortracking
-        ColorTracker ct;
-        ct.setImage(img);
-        ct.generateBinary(minColor, maxColor, true);
-
-        //Getting the blob data from the trackers
-        ct.generateBlobs();
-        blobs = ct.getBlobs(60);
-
-        int maxBlobSize = 0;
-        auto maxBlob= blobs.begin();
-        for(auto it = blobs.begin(); it != blobs.end(); ++it)
-        {
-            if(it->pixelAmount > maxBlobSize)
-            {
-                maxBlobSize = it->pixelAmount;
-                maxBlob= it;
-            }
-        }
-        blobs.erase(maxBlob);
-
-        for(unsigned int i = 0; i < blobs.size(); i++)
-        {
-            ct.drawCircle(blobs.at(i).center, 5, cv::Scalar(255, 0, 0));
-        }
-        
-        cv::imshow("Threshold img", ct.getBinary());
-        cv::imshow("Display Image", img);
-
-        cv::waitKey(10);
+        mainLoop();
     }
 
     return 0;
+}
+
+void mainLoop()
+{
+    cv::Mat img;
+    camera >> img;
+
+    //Fix fisheye problems
+    cv::Mat tmpImg;
+
+    //Read fisheye correction stuff from a file. Generate using the "cpp/calibration" sample
+    cv::Mat camera_matrix, distortion;
+    cv::FileStorage fs("fisheye0.txt", cv::FileStorage::READ);
+    cv::FileNode fn = fs["IntParam"];
+    fn["camera_matrix"] >> camera_matrix;
+    fn["distortion"] >> distortion;
+
+    cv::undistort(img, tmpImg, camera_matrix, distortion);
+
+    img = tmpImg;
+    currentImage = tmpImg;
+    
+    //clock_t startTime = clock();
+
+    //Colortracking
+    ColorTracker ct;
+    ct.setImage(img);
+    ct.generateBinary(minColor, maxColor, true);
+
+    //Getting the blob data from the trackers
+    ct.generateBlobs();
+    blobs = ct.getBlobs(60);
+
+    int maxBlobSize = 0;
+    auto maxBlob= blobs.begin();
+    for(auto it = blobs.begin(); it != blobs.end(); ++it)
+    {
+        if(it->pixelAmount > maxBlobSize)
+        {
+            maxBlobSize = it->pixelAmount;
+            maxBlob= it;
+        }
+    }
+    blobs.erase(maxBlob);
+
+    for(unsigned int i = 0; i < blobs.size(); i++)
+    {
+        ct.drawCircle(blobs.at(i).center, 5, cv::Scalar(255, 0, 0));
+    }
+    
+    cv::imshow("Threshold img", ct.getBinary());
+    cv::imshow("Display Image", img);
+
+    cv::waitKey(1);
 }
 
 void onMouse(int event, int x, int y, int, void*)
@@ -157,13 +166,10 @@ void selectColor(int event, int x, int y, int, void*)
 {
     if(event == CV_EVENT_RBUTTONDOWN) //If this isn't a left click
     {
-        //Taking 1 image
-        cv::Mat ref;
-        camera >> ref;
 
         //Create a color tracker to get the color
         ColorTracker ct;
-        ct.setImage(ref);
+        ct.setImage(currentImage);
 
         redColor = ct.getColorInPixel(Vec2(x, y));
         
@@ -172,18 +178,6 @@ void selectColor(int event, int x, int y, int, void*)
     }
     else
     {
-        auto lowestBlob = blobs.begin();
-        float lowestDistance = std::numeric_limits<float>::max();
-        for(auto it = blobs.begin(); it != blobs.end(); ++it)
-        {
-            Vec2 distance = (it->center - Vec2(x,y));
-            if(distance.getLength() < lowestDistance)
-            {
-                lowestDistance = distance.getLength();
-                lowestBlob = it;
-            }
-        }
-
         std::cout << coordinateConverter->convertTo(Vec2(x,y)).getString() << std::endl;
     }
 }
@@ -194,3 +188,5 @@ void setMinMaxColor(Vec3 target, Vec3& minColor, Vec3& maxColor, Vec3 threshold)
     minColor = target - threshold;
     maxColor = target + threshold;
 }
+
+
