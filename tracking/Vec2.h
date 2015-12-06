@@ -18,9 +18,10 @@ public:
     Vec2& operator=(Vec2 arg);
     Vec2 operator+=(const Vec2& rhs);
     Vec2 operator-=(const Vec2& rhs);
-    Vec2 operator*=(const float rhs);
+    Vec2 operator*=(const float& rhs);
     const Vec2 operator+(const Vec2& rhs);
     const Vec2 operator-(const Vec2& rhs);
+    const Vec2 operator*(const float& rhs);
     bool operator==(const Vec2& other);
 
     float getAngle();

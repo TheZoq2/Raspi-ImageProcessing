@@ -11,6 +11,7 @@ public:
     CoordinateConverter (std::vector<Vec2> corners);
 
     Vec2 convertTo(Vec2 coords);
+    Vec2 convertFrom(Vec2 coords);
 
 private:
     std::vector<Vec2> corners;
@@ -18,5 +19,6 @@ private:
     Vec2 startCorner;
     float angle;
     float normalLength;
+
 };
 #endif

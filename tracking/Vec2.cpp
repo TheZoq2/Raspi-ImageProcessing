@@ -61,7 +61,7 @@ Vec2 Vec2::operator-=(const Vec2& rhs)
 
     return *this;
 }
-Vec2 Vec2::operator*=(const float rhs)
+Vec2 Vec2::operator*=(const float& rhs)
 {
     this->val[0] = this->val[0] * rhs;
     this->val[1] = this->val[1] * rhs;
@@ -81,6 +81,13 @@ const Vec2 Vec2::operator-(const Vec2& rhs)
     result -= rhs;
     return result;
 }
+const Vec2 Vec2::operator*(const float& rhs)
+{
+    Vec2 result = *this;
+    result *= rhs;
+    return result;
+}
+
 bool Vec2::operator==(const Vec2& other)
 {
     if(other.val[0] == this->val[0] && other.val[1] == this->val[1])

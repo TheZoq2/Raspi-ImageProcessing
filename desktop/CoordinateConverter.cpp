@@ -29,3 +29,18 @@ Vec2 CoordinateConverter::convertTo(Vec2 coords)
 
     return result;
 }
+
+Vec2 CoordinateConverter::convertFrom(Vec2 coords)
+{
+    Vec2 result;
+
+
+    result.val[0] = coords.val[0] * cos(-angle) - coords.val[1] * sin(-angle);
+    result.val[1] = coords.val[0] * sin(-angle) + coords.val[1] * cos(-angle);
+
+    result *= normalLength;
+
+    result += startCorner;
+
+    return result;
+}

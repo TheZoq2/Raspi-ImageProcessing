@@ -11,6 +11,7 @@ public:
     void setHole(Vec2 hole);
 
     float getHitAngle();
+    Vec2 getWhiteBall();
 private:
     Vec2 whiteBall;
     Vec2 targetBall;

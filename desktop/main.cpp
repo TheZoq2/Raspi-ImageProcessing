@@ -141,10 +141,55 @@ void mainLoop()
     }
     else if(state == SELECT_PARAMETERS)
     {
+
     }
     else if(state == PLAY)
     {
-        state = WAIT_FOR_SELECT;
+        //state = WAIT_FOR_SELECT;
+        captureNewImage();
+
+        //Colortracking
+        ct.setImage(currentImage);
+        ct.generateBinary(minColor, maxColor, true);
+
+        //Getting the blob data from the trackers
+        ct.generateBlobs();
+        blobs = ct.getBlobs(60);
+
+        int maxBlobSize = 0;
+        auto maxBlob= blobs.begin();
+        for(auto it = blobs.begin(); it != blobs.end(); ++it)
+        {
+            if(it->pixelAmount > maxBlobSize)
+            {
+                maxBlobSize = it->pixelAmount;
+                maxBlob= it;
+            }
+        }
+        blobs.erase(maxBlob);
+
+        //calculatng the line that we want to draw
+        const float lineLength = 100;
+        float hitAngle = pool.getHitAngle();
+
+        Vec2 lineStart(lineLength * cos(hitAngle), lineLength * sin(hitAngle));
+        Vec2 lineEnd(lineLength * cos(hitAngle + M_PI), lineLength * sin(hitAngle + M_PI));
+
+        //Adding those coordinates to the location of the white ball
+        Vec2 whitePos = coordinateConverter->convertFrom(pool.getWhiteBall());
+        lineStart += whitePos;
+        lineEnd += whitePos;
+
+        std::cout << lineStart.getString() << std::endl;
+
+        cv::line(
+                currentImage, 
+                cv::Point(lineStart.val[0], lineStart.val[1]), 
+                cv::Point(lineEnd.val[0], lineEnd.val[1]),
+                cv::Scalar(0,0,255),
+                3,
+                CV_AA
+                );
     }
 
     for(unsigned int i = 0; i < blobs.size(); i++)
@@ -173,7 +218,6 @@ void selectColor(int event, int x, int y, int, void*)
 {
     if(event == CV_EVENT_RBUTTONDOWN) //If this isn't a left click
     {
-
         //Create a color tracker to get the color
         ColorTracker ct;
         ct.setImage(currentImage);
@@ -185,7 +229,6 @@ void selectColor(int event, int x, int y, int, void*)
     }
     else if(event == CV_EVENT_LBUTTONDOWN)
     {
-        //std::cout << coordinateConverter->convertTo(Vec2(x,y)).getString() << std::endl;
         switch(state) 
         {
             case WAIT_FOR_SELECT:
@@ -199,6 +242,9 @@ void selectColor(int event, int x, int y, int, void*)
                 break;
             }
         }
+    }
+    else
+    {
     }
 }
 
@@ -245,17 +291,19 @@ void runSelect(float x, float y)
         }
     }
 
+    Vec2 closestCenter = coordinateConverter->convertTo(closestBlob->center);
+
     switch(selState) 
     {
         case WHITE_BALL:
         {
-            pool.setWhiteBall(closestBlob->center);
+            pool.setWhiteBall(closestCenter);
             selState = TARGET;
             break;
         }
         case TARGET:
         {
-            pool.setTargetBall(closestBlob->center);
+            pool.setTargetBall(closestCenter);
 
             selState = HOLE;
             break;
@@ -274,7 +322,7 @@ void runSelect(float x, float y)
             if(holeY > 0.5)
                 holeX = 0.5;
 
-            pool.setHole(Vec2(holeX, holeY));
+            pool.setHole(coordinateConverter->convertTo(Vec2(holeX, holeY)));
             selState = WHITE_BALL;
             state = PLAY;
             break;

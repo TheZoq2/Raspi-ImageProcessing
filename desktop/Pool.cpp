@@ -17,4 +17,12 @@ float Pool::getHitAngle()
 {
     //Calculating the angle of the vector that the target needs to travel
     Vec2 targetDiff = hole - targetBall;
+
+    float targetAngle = targetDiff.getAngle();
+
+    return targetAngle;
+}
+Vec2 Pool::getWhiteBall()
+{
+    return whiteBall;
 }
