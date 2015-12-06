@@ -8,7 +8,7 @@ class Pool
 public:
     void setWhiteBall(Vec2 whiteBall);
     void setTargetBall(Vec2 targetBall);
-    void setHole(Vec2 hole);
+    void setPocket(Vec2 hole);
 
     float getHitAngle();
 private:

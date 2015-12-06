@@ -8,7 +8,7 @@ void Pool::setTargetBall(Vec2 targetBall)
 {
     this->targetBall = targetBall;
 }
-void Pool::setHole(Vec2 hole)
+void Pool::setPocket(Vec2 hole)
 {
     this->hole = hole;
 }
