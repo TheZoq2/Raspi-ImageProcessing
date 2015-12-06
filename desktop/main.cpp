@@ -10,12 +10,23 @@
 #include "objectTracking/ColorTracker.h"
 #include "objectTracking/Flooder.h"
 #include "CoordinateConverter.h"
+#include "Pool.h"
 
 enum PROGRAM_STATE
 {
     WAIT_FOR_SELECT,
     SELECT_PARAMETERS,
+    PLAY
 };
+PROGRAM_STATE state;
+
+enum SELECT_STATE
+{
+    WHITE_BALL,
+    TARGET,
+    HOLE
+};
+SELECT_STATE selState;
 
 cv::VideoCapture camera(1);
 
@@ -37,12 +48,17 @@ bool running = true;
 void onMouse(int event, int x, int y, int, void*);
 void selectColor(int event, int x, int y, int , void*);
 void setMinMaxColor(Vec3 target, Vec3& minColor, Vec3& maxColor, Vec3 threshold);
+void captureNewImage();
+void runSelect(float x, float y);
 
 void mainLoop();
 
 std::unique_ptr<CoordinateConverter> coordinateConverter;
 
 cv::Mat currentImage;
+ColorTracker ct;
+
+Pool pool;
 
 int main()
 {
@@ -99,46 +115,37 @@ int main()
 
 void mainLoop()
 {
-    cv::Mat img;
-    camera >> img;
-
-    //Fix fisheye problems
-    cv::Mat tmpImg;
-
-    //Read fisheye correction stuff from a file. Generate using the "cpp/calibration" sample
-    cv::Mat camera_matrix, distortion;
-    cv::FileStorage fs("fisheye0.txt", cv::FileStorage::READ);
-    cv::FileNode fn = fs["IntParam"];
-    fn["camera_matrix"] >> camera_matrix;
-    fn["distortion"] >> distortion;
-
-    cv::undistort(img, tmpImg, camera_matrix, distortion);
-
-    img = tmpImg;
-    currentImage = tmpImg;
-    
-    //clock_t startTime = clock();
-
-    //Colortracking
-    ColorTracker ct;
-    ct.setImage(img);
-    ct.generateBinary(minColor, maxColor, true);
-
-    //Getting the blob data from the trackers
-    ct.generateBlobs();
-    blobs = ct.getBlobs(60);
-
-    int maxBlobSize = 0;
-    auto maxBlob= blobs.begin();
-    for(auto it = blobs.begin(); it != blobs.end(); ++it)
+    if(state == WAIT_FOR_SELECT)
     {
-        if(it->pixelAmount > maxBlobSize)
+        captureNewImage();
+
+        //Colortracking
+        ct.setImage(currentImage);
+        ct.generateBinary(minColor, maxColor, true);
+
+        //Getting the blob data from the trackers
+        ct.generateBlobs();
+        blobs = ct.getBlobs(60);
+
+        int maxBlobSize = 0;
+        auto maxBlob= blobs.begin();
+        for(auto it = blobs.begin(); it != blobs.end(); ++it)
         {
-            maxBlobSize = it->pixelAmount;
-            maxBlob= it;
+            if(it->pixelAmount > maxBlobSize)
+            {
+                maxBlobSize = it->pixelAmount;
+                maxBlob= it;
+            }
         }
+        blobs.erase(maxBlob);
     }
-    blobs.erase(maxBlob);
+    else if(state == SELECT_PARAMETERS)
+    {
+    }
+    else if(state == PLAY)
+    {
+        state = WAIT_FOR_SELECT;
+    }
 
     for(unsigned int i = 0; i < blobs.size(); i++)
     {
@@ -146,7 +153,7 @@ void mainLoop()
     }
     
     cv::imshow("Threshold img", ct.getBinary());
-    cv::imshow("Display Image", img);
+    cv::imshow("Display Image", currentImage);
 
     cv::waitKey(1);
 }
@@ -176,9 +183,22 @@ void selectColor(int event, int x, int y, int, void*)
         //Recalculating the threshold
         setMinMaxColor(redColor, minColor, maxColor, threshold);
     }
-    else
+    else if(event == CV_EVENT_LBUTTONDOWN)
     {
-        std::cout << coordinateConverter->convertTo(Vec2(x,y)).getString() << std::endl;
+        //std::cout << coordinateConverter->convertTo(Vec2(x,y)).getString() << std::endl;
+        switch(state) 
+        {
+            case WAIT_FOR_SELECT:
+            {
+                state = SELECT_PARAMETERS;
+                break;
+            }
+            case SELECT_PARAMETERS:
+            {
+                runSelect(x, y);
+                break;
+            }
+        }
     }
 }
 
@@ -189,4 +209,75 @@ void setMinMaxColor(Vec3 target, Vec3& minColor, Vec3& maxColor, Vec3 threshold)
     maxColor = target + threshold;
 }
 
+void captureNewImage()
+{
+    cv::Mat img;
+    camera >> img;
 
+    //Fix fisheye problems
+    cv::Mat tmpImg;
+
+    //Read fisheye correction stuff from a file. Generate using the "cpp/calibration" sample
+    cv::Mat camera_matrix, distortion;
+    cv::FileStorage fs("fisheye0.txt", cv::FileStorage::READ);
+    cv::FileNode fn = fs["IntParam"];
+    fn["camera_matrix"] >> camera_matrix;
+    fn["distortion"] >> distortion;
+
+    cv::undistort(img, tmpImg, camera_matrix, distortion);
+
+    img = tmpImg;
+    currentImage = tmpImg;
+}
+
+void runSelect(float x, float y)
+{
+    //Finding the closest ball
+    float minBlobDistance = 0;
+    auto closestBlob = blobs.begin();
+    for(auto it = blobs.begin(); it != blobs.end(); ++it)
+    {
+        Vec2 diff = closestBlob->center - Vec2(x, y);
+
+        if(diff.getLength() < minBlobDistance)
+        {
+            closestBlob = it;
+        }
+    }
+
+    switch(selState) 
+    {
+        case WHITE_BALL:
+        {
+            pool.setWhiteBall(closestBlob->center);
+            selState = TARGET;
+            break;
+        }
+        case TARGET:
+        {
+            pool.setTargetBall(closestBlob->center);
+
+            selState = HOLE;
+            break;
+        }
+        case HOLE:
+        {
+            float holeX = round(x * 2) / 2.0;
+            float holeY = round(y * 2) / 2.0;
+
+            if(holeX < 0)
+                holeX = 0;
+            if(holeX > 1)
+                holeX = 1;
+            if(holeY < 0)
+                holeY = 0;
+            if(holeY > 0.5)
+                holeX = 0.5;
+
+            pool.setHole(Vec2(holeX, holeY));
+            selState = WHITE_BALL;
+            state = PLAY;
+            break;
+        }
+    }
+}

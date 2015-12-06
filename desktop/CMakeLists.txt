@@ -10,6 +10,7 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS} -g -ftest-coverage -fprofile-
 set(SOURCES
     main.cpp
     CoordinateConverter.cpp
+    Pool.cpp
     objectTracking/Flooder.h
     objectTracking/Flooder.cpp
     objectTracking/Vec3.cpp
