@@ -81,7 +81,6 @@ Vec3 ColorTracker::getColorInPixel(Vec2 pixel)
     int avgSize = 5;
     for(int x = -avgSize; x <= avgSize; x++)
     {
-#pragma omp for
         for(int y = -avgSize; y <= avgSize; y++)
         {
             int pixelX = x + pixel.val[0];
