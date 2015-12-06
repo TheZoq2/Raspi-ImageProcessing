@@ -141,7 +141,24 @@ void mainLoop()
     }
     else if(state == SELECT_PARAMETERS)
     {
+        std::string instruction;
 
+        float offset = 0;
+        switch(selState)
+        {
+            case WHITE_BALL:
+                instruction = "Select white ball";
+                break;
+            case TARGET:
+                instruction = "Select target ball";
+                offset = 100;
+                break;
+            case HOLE:
+                instruction = "Select pocket";
+                offset = 200;
+                break;
+        }
+        cv::putText(currentImage, instruction, cv::Point(10, 100 + offset), cv::FONT_HERSHEY_DUPLEX, 1, cv::Scalar(255,0,255));
     }
     else if(state == PLAY)
     {
