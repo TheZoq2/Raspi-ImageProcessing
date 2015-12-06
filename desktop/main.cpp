@@ -99,11 +99,13 @@ int main()
     cv::setMouseCallback("GUI", onMouse);
     cv::moveWindow("GUI", 0, 500);
 
+    cv::namedWindow("Threshold img");
+    cv::moveWindow("Threshold img", 800, 0);
+
     cv::namedWindow("Display Image");
     cv::setMouseCallback("Display Image", selectColor);
+    cv::moveWindow("Display Image", 100, 100);
 
-    cv::namedWindow("Threshold img");
-    cv::moveWindow("Threshold img", 0, 0);
 
     while(running == true)
     {
@@ -197,14 +199,12 @@ void mainLoop()
         lineStart += whitePos;
         lineEnd += whitePos;
 
-        std::cout << lineStart.getString() << std::endl;
-
         cv::line(
                 currentImage, 
                 cv::Point(lineStart.val[0], lineStart.val[1]), 
                 cv::Point(lineEnd.val[0], lineEnd.val[1]),
                 cv::Scalar(0,0,255),
-                3,
+                2,
                 CV_AA
                 );
     }
@@ -213,9 +213,16 @@ void mainLoop()
     {
         ct.drawCircle(blobs.at(i).center, 5, cv::Scalar(255, 0, 0));
     }
+
+    cv::Mat displayImage = currentImage;
+
+    if(state == PLAY)
+    {
+        cv::resize(currentImage, displayImage, cv::Size(1280, 1024));
+    }
     
     cv::imshow("Threshold img", ct.getBinary());
-    cv::imshow("Display Image", currentImage);
+    cv::imshow("Display Image", displayImage);
 
     cv::waitKey(1);
 }
@@ -243,21 +250,19 @@ void selectColor(int event, int x, int y, int, void*)
         
         //Recalculating the threshold
         setMinMaxColor(redColor, minColor, maxColor, threshold);
+
+        std::cout << x << "  " << y << std::endl;
     }
     else if(event == CV_EVENT_LBUTTONDOWN)
     {
-        switch(state) 
+        if(state == WAIT_FOR_SELECT || state == PLAY) 
         {
-            case WAIT_FOR_SELECT:
-            {
-                state = SELECT_PARAMETERS;
-                break;
-            }
-            case SELECT_PARAMETERS:
-            {
-                runSelect(x, y);
-                break;
-            }
+            state = SELECT_PARAMETERS;
+        }
+        else if(state == SELECT_PARAMETERS)
+        {
+            state = SELECT_PARAMETERS;
+            runSelect(x, y);
         }
     }
     else
@@ -296,15 +301,16 @@ void captureNewImage()
 void runSelect(float x, float y)
 {
     //Finding the closest ball
-    float minBlobDistance = 0;
+    float minBlobDistance = 10000000000;
     auto closestBlob = blobs.begin();
     for(auto it = blobs.begin(); it != blobs.end(); ++it)
     {
-        Vec2 diff = closestBlob->center - Vec2(x, y);
+        Vec2 diff = it->center - Vec2(x, y);
 
         if(diff.getLength() < minBlobDistance)
         {
             closestBlob = it;
+            minBlobDistance = diff.getLength();
         }
     }
 
