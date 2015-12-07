@@ -7,12 +7,13 @@
 #include <unistd.h>
 #include <memory>
 
+#include "config.h"
+
 #include "objectTracking/ColorTracker.h"
 #include "objectTracking/Flooder.h"
 #include "CoordinateConverter.h"
 #include "Pool.h"
 
-//#define USE_VIDEO
 
 enum PROGRAM_STATE
 {
@@ -31,7 +32,7 @@ enum SELECT_STATE
 SELECT_STATE selState;
 
 #ifndef USE_VIDEO
-cv::VideoCapture camera(1);
+cv::VideoCapture camera(CAMERA_ID);
 #else
 cv::VideoCapture videoCapture("inputVideo.mp4");
 #endif
@@ -265,8 +266,6 @@ void selectColor(int event, int x, int y, int, void*)
         
         //Recalculating the threshold
         setMinMaxColor(redColor, minColor, maxColor, threshold);
-
-        std::cout << x << "  " << y << std::endl;
     }
     else if(event == CV_EVENT_LBUTTONDOWN)
     {
@@ -317,7 +316,6 @@ void captureNewImage()
 
     cv::undistort(img, tmpImg, camera_matrix, distortion);
 
-    std::cout << img.cols << "  " << img.rows << std::endl;
     cv::resize(tmpImg, img, cv::Size(480, 640));
 
     currentImage = tmpImg;
