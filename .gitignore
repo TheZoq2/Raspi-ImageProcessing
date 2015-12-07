@@ -52,3 +52,5 @@ Session.vim
 
 */build/*
 */debug/*
+
+*.mp4
