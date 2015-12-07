@@ -44,3 +44,9 @@ Vec2 CoordinateConverter::convertFrom(Vec2 coords)
 
     return result;
 }
+
+Vec2 CoordinateConverter::getCorner(int id)
+{
+    return corners[id];
+}
+
