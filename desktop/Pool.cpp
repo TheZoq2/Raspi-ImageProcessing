@@ -20,7 +20,6 @@ void Pool::setPocket(Vec2 pocket)
 
 float Pool::getHitAngle() 
 {
-    std::cout << whiteBall.getString() << std::endl;
     //Calculating the angle of the vector that the target needs to travel
     Vec2 targetDiff = pocket - targetBall;
 

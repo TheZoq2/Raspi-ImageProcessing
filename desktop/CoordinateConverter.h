@@ -13,6 +13,7 @@ public:
     Vec2 convertTo(Vec2 coords);
     Vec2 convertFrom(Vec2 coords);
 
+    Vec2 getCorner(int id);
 private:
     std::vector<Vec2> corners;
 
