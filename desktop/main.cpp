@@ -12,7 +12,7 @@
 #include "CoordinateConverter.h"
 #include "Pool.h"
 
-#define USE_VIDEO
+//#define USE_VIDEO
 
 enum PROGRAM_STATE
 {
@@ -310,14 +310,16 @@ void captureNewImage()
 
     //Read fisheye correction stuff from a file. Generate using the "cpp/calibration" sample
     cv::Mat camera_matrix, distortion;
-    cv::FileStorage fs("fisheye0.txt", cv::FileStorage::READ);
+    cv::FileStorage fs("../data/fisheye0.txt", cv::FileStorage::READ);
     cv::FileNode fn = fs["IntParam"];
     fn["camera_matrix"] >> camera_matrix;
     fn["distortion"] >> distortion;
 
     cv::undistort(img, tmpImg, camera_matrix, distortion);
 
-    img = tmpImg;
+    std::cout << img.cols << "  " << img.rows << std::endl;
+    cv::resize(tmpImg, img, cv::Size(480, 640));
+
     currentImage = tmpImg;
 }
 
