@@ -71,7 +71,7 @@ int main()
 {
     //Reading bounds of the table
     std::ifstream boundFile;
-    boundFile.open("bounds");
+    boundFile.open("../data/bounds");
 
     std::vector<Vec2> boundCoords;
     for(int i = 0; i < 3; ++i)
@@ -266,6 +266,8 @@ void selectColor(int event, int x, int y, int, void*)
         
         //Recalculating the threshold
         setMinMaxColor(redColor, minColor, maxColor, threshold);
+
+        std::cout << x << "  " << y << std::endl;
     }
     else if(event == CV_EVENT_LBUTTONDOWN)
     {
