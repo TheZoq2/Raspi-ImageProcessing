@@ -312,13 +312,13 @@ void captureNewImage()
     cv::FileStorage fs("../data/fisheye0.txt", cv::FileStorage::READ);
     cv::FileNode fn = fs["IntParam"];
     fn["camera_matrix"] >> camera_matrix;
-    fn["distortion"] >> distortion;
+    fn["distortion_coefficients"] >> distortion;
 
     cv::undistort(img, tmpImg, camera_matrix, distortion);
 
-    cv::resize(tmpImg, img, cv::Size(480, 640));
+    cv::resize(tmpImg, img, cv::Size(640, 480));
 
-    currentImage = tmpImg;
+    currentImage = img;
 }
 
 void runSelect(float x, float y)
