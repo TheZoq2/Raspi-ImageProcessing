@@ -213,7 +213,14 @@ void mainLoop()
     {
         ct.drawCircle(blobs.at(i).center, 5, cv::Scalar(255, 0, 0));
     }   
-    //cv::circle(currentImage, cv::Point(20, 30), 20, cv::Scalar(20, 30,255), -1, 8);
+    
+    //Drawing the bounds
+    for(int i = 0; i < 3; i++)
+    {
+        Vec2 pos = coordinateConverter->getCorner(i);
+        cv::circle(currentImage, cv::Point(pos.val[0], pos.val[1]), 5, cv::Scalar(20, 30,255), -1, 8);
+    }
+
     cv::Mat displayImage = currentImage;
 
     if(state == PLAY)
