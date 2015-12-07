@@ -12,6 +12,8 @@
 #include "CoordinateConverter.h"
 #include "Pool.h"
 
+#define USE_VIDEO
+
 enum PROGRAM_STATE
 {
     WAIT_FOR_SELECT,
@@ -28,7 +30,11 @@ enum SELECT_STATE
 };
 SELECT_STATE selState;
 
+#ifndef USE_VIDEO
 cv::VideoCapture camera(1);
+#else
+cv::VideoCapture videoCapture("inputVideo.mp4");
+#endif
 
 Vec3 targetColor(29, 227, 218);
 Vec3 minColor;
@@ -77,14 +83,23 @@ int main()
     }
     coordinateConverter.reset(new CoordinateConverter(boundCoords));
     
+    
+    cv::Mat ref;
+#ifndef USE_VIDEO
     if(camera.isOpened() == false)
     {
         std::cout << "Failed to open camera" << std::endl;
     }
 
     //capture 1 image for use as reference
-    cv::Mat ref;
     camera >> ref;
+#else
+    if(videoCapture.isOpened() == false)
+    {
+        std::cout << "Failed to open video, does the file exist?" << std::endl;
+    }
+    videoCapture >> ref;
+#endif
 
     ColorTracker ct;
     ct.setImage(ref);
@@ -280,8 +295,16 @@ void setMinMaxColor(Vec3 target, Vec3& minColor, Vec3& maxColor, Vec3 threshold)
 void captureNewImage()
 {
     cv::Mat img;
+#ifndef USE_VIDEO
     camera >> img;
+#else
+    //videoCapture >> img;
+    //img = cv::imdecode(videoCapture, 0);
+    //img = videoCapture.retrieve(img);
 
+    videoCapture >> img;
+
+#endif
     //Fix fisheye problems
     cv::Mat tmpImg;
 
