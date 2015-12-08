@@ -3,7 +3,7 @@
 #include <iostream>
 #include <math.h>
 
-const float Pool::BALL_RADIUS = 0.5/11.5;
+const float Pool::BALL_RADIUS = 0.5/23;
 
 void Pool::setWhiteBall(Vec2 whiteBall)
 {
