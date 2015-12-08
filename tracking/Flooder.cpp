@@ -1,5 +1,9 @@
 #include "Flooder.h"
 
+#include <chrono>
+
+typedef std::chrono::high_resolution_clock Clock;
+
 Flooder::Flooder(std::vector< std::vector< int > > map)
 {
     mMap = map;
@@ -7,35 +11,24 @@ Flooder::Flooder(std::vector< std::vector< int > > map)
 
 void Flooder::flood()
 {
-    //Creating an image to store the locations of found blobs
-    cv::Mat foundImg;
-    
-    //Create a copy of the map
-    std::vector< std::vector< int > > mapCopy = mMap;
-    
-    foundImg.create(cv::Size(mapCopy.size(), mapCopy.at(0).size()), CV_8UC1);
-    uint8_t* foundImgData = foundImg.data;
-    for(unsigned int i = 0; i < mapCopy.size() * mapCopy.at(0).size(); i++)
-    {
-        foundImgData[i] = 0;
-    }
     //Loop through the map
-    for(unsigned int x = 0; x < mapCopy.size(); x += 1)
+    for(unsigned int x = 0; x < mMap.size(); x += 1)
     {
-        for(unsigned int y = 0; y < mapCopy[x].size(); y += 1)
+        for(unsigned int y = 0; y < mMap[x].size(); y += 1)
         {
-            if(mapCopy[x][y] != 0)
+            if(mMap[x][y] != 0)
             {
                 //Start a search from that pixel
-                Blob searchResult = searchFrom(x, y, &mapCopy);
+                Blob searchResult = searchFrom(x, y, &mMap);
 
                 mBlobs.push_back(searchResult);
 
-                int pixelPos = ImgFunc::getPixelStart(x, y, mapCopy.size(), mapCopy.at(x).size(), 1);
-                foundImgData[pixelPos] = 255;
+                int pixelPos = ImgFunc::getPixelStart(x, y, mMap.size(), mMap.at(x).size(), 1);
             }
         }
     }
+
+    std::cout << mBlobs.size() << std::endl;
 }
 
 Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > >* map)
@@ -44,10 +37,10 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
 
     int pixelAmount = 0;
     Vec2 pixelSum(0, 0);
-    float minX = 120125;
-    float minY = 125125;
-    float maxX = -1251221;
-    float maxY = -1251251;
+    float minX = std::numeric_limits<float>::max();
+    float minY = std::numeric_limits<float>::max();
+    float maxX = std::numeric_limits<float>::min();
+    float maxY = std::numeric_limits<float>::min();
 
     std::deque< Vec2 > openList;
     std::deque< Vec2 > closedList;
@@ -62,8 +55,6 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
         pixelAmount++;
         pixelSum += cPixel;
         
-        bool inBounds = true;
-        
         //Adding all the pixels next to the current pixel to the open list
         for(int cX = -1; cX <= 1; cX++)
         {
@@ -72,8 +63,7 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
                 Vec2 offsetPixel(cX, cY);
 
                 
-                //preventing diagonal checks
-                //if(abs(cX) == 1 && abs(cY) == 1)
+                if(!(abs(cX) == 1 && abs(cY) == 1))
                 {
                     Vec2 nPixel = cPixel + offsetPixel;
                     
@@ -85,22 +75,12 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
                     {
                         if(map->at(nPixel.val[0]).at(nPixel.val[1]) == 1)
                         {
-                            //Checking if the pixel is already on the closed list
-                            bool onList = false;
+                            //add to the open list
+                            openList.push_back(nPixel);
 
-                            if(onList == false)
-                            {
-                                //add to the open list
-                                openList.push_back(nPixel);
-
-                                //Set the pixel to 0 to avoid finding the blob
-                                //more than once
-                                map->at(nPixel.val[0]).at(nPixel.val[1]) = 0;
-
-                                //Adding the found pixel position to the total
-                                //coords
-                                //pixelSum += nPixel;
-                            }
+                            //Set the pixel to 0 to avoid finding the blob
+                            //more than once
+                            map->at(nPixel.val[0]).at(nPixel.val[1]) = 0;
                         }
                     }
                 }
