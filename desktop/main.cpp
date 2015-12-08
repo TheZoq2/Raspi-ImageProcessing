@@ -13,6 +13,7 @@
 #include "objectTracking/Flooder.h"
 #include "CoordinateConverter.h"
 #include "Pool.h"
+#include "Performance.h"
 
 
 enum PROGRAM_STATE
@@ -66,6 +67,8 @@ cv::Mat currentImage;
 ColorTracker ct;
 
 Pool pool;
+
+Performance performance;
 
 int main()
 {
@@ -137,6 +140,9 @@ void mainLoop()
     {
         captureNewImage();
 
+
+        performance.startMeassurement();
+
         //Colortracking
         ct.setImage(currentImage);
         ct.generateBinary(minColor, maxColor, true);
@@ -145,17 +151,25 @@ void mainLoop()
         ct.generateBlobs();
         blobs = ct.getBlobs(60);
 
-        int maxBlobSize = 0;
-        auto maxBlob= blobs.begin();
-        for(auto it = blobs.begin(); it != blobs.end(); ++it)
+        //Meassuring the time the function takes
+        performance.endMeassuremet();
+        performance.printResult();
+
+
+        if(blobs.size() > 0)
         {
-            if(it->pixelAmount > maxBlobSize)
+            int maxBlobSize = 0;
+            auto maxBlob= blobs.begin();
+            for(auto it = blobs.begin(); it != blobs.end(); ++it)
             {
-                maxBlobSize = it->pixelAmount;
-                maxBlob= it;
+                if(it->pixelAmount > maxBlobSize)
+                {
+                    maxBlobSize = it->pixelAmount;
+                    maxBlob= it;
+                }
             }
+            blobs.erase(maxBlob);
         }
-        blobs.erase(maxBlob);
     }
     else if(state == SELECT_PARAMETERS)
     {
