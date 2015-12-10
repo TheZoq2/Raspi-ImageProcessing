@@ -42,10 +42,9 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
     float maxX = std::numeric_limits<float>::min();
     float maxY = std::numeric_limits<float>::min();
 
-    std::deque< Vec2 > openList;
-    std::deque< Vec2 > closedList;
+    std::queue< Vec2 > openList;
 
-    openList.push_back(Vec2(x, y));
+    openList.push(Vec2(x, y));
 
     while(openList.size() > 0)
     {
@@ -76,7 +75,7 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
                         if(map->at(nPixel.val[0]).at(nPixel.val[1]) == 1)
                         {
                             //add to the open list
-                            openList.push_back(nPixel);
+                            openList.push(nPixel);
 
                             //Set the pixel to 0 to avoid finding the blob
                             //more than once
@@ -87,10 +86,8 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
             }
         }
 
-        //Done processing this pixel, add to closed list
-        closedList.push_back(cPixel);
         //remove it from the openlist
-        openList.pop_front();
+        openList.pop();
     }
 
     //The search has been completed, calculate the blob values
