@@ -326,6 +326,7 @@ void captureNewImage()
 
     videoCapture >> img;
 
+    cv::resize(img, img, cv::Size(640, 480));
 #endif
     //Fix fisheye problems
     cv::Mat tmpImg;

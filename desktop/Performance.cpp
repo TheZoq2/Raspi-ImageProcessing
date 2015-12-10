@@ -50,7 +50,7 @@ void Performance::startMeassurement()
 {
     start = std::chrono::high_resolution_clock::now();
 }
-void Performance::endMeassurement()
+void Performance::endMeassuremet()
 {
     end = std::chrono::high_resolution_clock::now();
 }

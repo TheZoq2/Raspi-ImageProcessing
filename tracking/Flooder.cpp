@@ -27,8 +27,6 @@ void Flooder::flood()
             }
         }
     }
-
-    std::cout << mBlobs.size() << std::endl;
 }
 
 Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > >* map)
