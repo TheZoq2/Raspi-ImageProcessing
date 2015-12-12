@@ -224,16 +224,32 @@ void mainLoop()
         Vec2 lineStart(lineLength * cos(hitAngle), lineLength * sin(hitAngle));
         Vec2 lineEnd(lineLength * cos(hitAngle + M_PI), lineLength * sin(hitAngle + M_PI));
 
+        Vec2 lineStart2(lineLength * cos(hitAngle), lineLength * sin(hitAngle));
+        Vec2 lineEnd2(lineLength * cos(hitAngle + M_PI), lineLength * sin(hitAngle + M_PI));
+
         //Adding those coordinates to the location of the white ball
         Vec2 whitePos = coordinateConverter->convertFrom(pool.getWhiteBall());
         lineStart += whitePos;
         lineEnd += whitePos;
+
+        //Adding those coordinates to the location of the white ball
+        Vec2 targetPos = coordinateConverter->convertFrom(pool.getWhiteBall());
+        lineStart += targetPos;
+        lineEnd += targetPos;
 
         cv::line(
                 currentImage, 
                 cv::Point(lineStart.val[0], lineStart.val[1]), 
                 cv::Point(lineEnd.val[0], lineEnd.val[1]),
                 cv::Scalar(0,0,255),
+                2,
+                CV_AA
+                );
+        cv::line(
+                currentImage, 
+                cv::Point(lineStart2.val[0], lineStart2.val[1]), 
+                cv::Point(lineEnd2.val[0], lineEnd2.val[1]),
+                cv::Scalar(255,0,0),
                 2,
                 CV_AA
                 );

@@ -25,6 +25,8 @@ float Pool::getHitAngle()
 
     float targetAngle = targetDiff.getAngle();
 
+    lastHoleAngle = targetAngle;
+
     //Calculating where the white needs to be when it hits
     Vec2 whiteTarget(BALL_RADIUS * 2 * cos(targetAngle - M_PI), BALL_RADIUS * 2 * sin(targetAngle - M_PI));
     whiteTarget += targetBall;
