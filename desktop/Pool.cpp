@@ -3,7 +3,7 @@
 #include <iostream>
 #include <math.h>
 
-const float Pool::BALL_RADIUS = 0.5/23;
+const float Pool::BALL_RADIUS = 0.5/(15 * 2);
 
 void Pool::setWhiteBall(Vec2 whiteBall)
 {
@@ -28,7 +28,7 @@ float Pool::getHitAngle()
     lastHoleAngle = targetAngle;
 
     //Calculating where the white needs to be when it hits
-    Vec2 whiteTarget(BALL_RADIUS * 2 * cos(targetAngle - M_PI), BALL_RADIUS * 2 * sin(targetAngle - M_PI));
+    Vec2 whiteTarget(BALL_RADIUS * 2 * cos(targetAngle + M_PI), BALL_RADIUS * 2 * sin(targetAngle + M_PI));
     whiteTarget += targetBall;
 
     Vec2 finalDiff = whiteTarget - whiteBall; 
@@ -39,4 +39,13 @@ float Pool::getHitAngle()
 Vec2 Pool::getWhiteBall()
 {
     return whiteBall;
+}
+
+float Pool::getTargetAngle()
+{
+    return lastHoleAngle;
+}
+Vec2 Pool::getTargetBall()
+{
+    return targetBall;
 }
