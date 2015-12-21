@@ -5,9 +5,9 @@
 #include <raspicam/raspicam_cv.h>
 #include <stdio.h>
 
-#include "Vec3.h"
-#include "ColorTracker.h"
-#include "ImgFunc.h"
+#include "objectTracking/Vec3.h"
+#include "objectTracking/ColorTracker.h"
+#include "objectTracking/ImgFunc.h"
 
 #define END_LOOP_BUTTON 24
 
@@ -133,6 +133,8 @@ int main()
 
                 ct.setImage(image);
                 ct.generateBinary(minColor, maxColor, true);
+
+                cv::imshow("", image);
 
 
                 std::cout << "Found object in: " << ct.getMiddlePos().getString() << std::endl;
