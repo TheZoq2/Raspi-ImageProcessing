@@ -27,6 +27,8 @@ void clear()
 
 int main()
 {
+    //cv::namedWindow("abc", CV_WINDOW_OPENGL);
+
     //Setting up the camera
     raspicam::RaspiCam_Cv camera;
 
@@ -51,6 +53,7 @@ int main()
     }
     std::cout << "Writing test img" << std::endl;
     cv::imwrite("/home/frans/public_html/test2.jpg", testImg);
+
 
     //Main menu
     bool running = true;
@@ -134,10 +137,12 @@ int main()
                 ct.setImage(image);
                 ct.generateBinary(minColor, maxColor, true);
 
-                cv::imshow("", image);
+                cv::imshow("abc", ct.getBinary());
+                cv::waitKey(10);
 
 
                 std::cout << "Found object in: " << ct.getMiddlePos().getString() << std::endl;
+                std::cout <<  "Showing image" << std::endl;
                 //storing the result in an image
                 uint8_t* pathData = pathImg.data;
            
