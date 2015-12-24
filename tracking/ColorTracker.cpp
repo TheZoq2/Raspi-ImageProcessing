@@ -1,4 +1,5 @@
 #include "ColorTracker.h"
+#include "../desktop/Performance.h"
 
 ColorTracker::ColorTracker()
 {
@@ -101,34 +102,30 @@ Vec3 ColorTracker::getColorInPixel(Vec2 pixel)
 
     return result;
 }
-void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddle, bool calcSectors)
+void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddle)
 {
+    
+    Performance p;
+
+    p.startMeassurement();
     //Clearing the vector
     binaryMap.clear();
 
 
     //Setting up the binary map
-    for(unsigned int x = 0; x < imgCols; x++)
+    for(std::size_t x = 0; x < imgCols; x++)
     {
         std::vector< int > tmpVec;
 
         binaryMap.push_back(tmpVec);
-        for(unsigned int y = 0; y < imgRows; y++)
+        for(std::size_t y = 0; y < imgRows; y++)
         {
              binaryMap.at(x).push_back(1);
         }
     }
 
-    hasSectors = calcSectors;
-    if(calcSectors == true)
-    {
-        if(sectors != NULL)
-        {
-            delete[] sectors;
-        }
-
-        //sectors = new int[secAmount][secAmount];
-    }
+    p.endMeassuremet();
+    p.printResult();
 
     //binaryImg.create(cv::Size(imgRows, imgCols), CV_8UC1);
     binaryImg.create(cv::Size(lastImg.cols, lastImg.rows), CV_8UC1);
@@ -146,10 +143,10 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
     int pixelsFound = 0;
     
     //Looking for the pixels within the bounds
-    for(int i = 0; i < imgRows * imgCols; i++)
+    for(std::size_t i = 0; i < imgRows * imgCols; ++i)
     {
         bool inBounds = true;
-        for(int n = 0; n < 3; n++)
+        for(std::size_t n = 0; n < 3; ++n)
         {
             //std::cout << "Searching pixel pos: " << i*3+n << std::endl;
             if(hsvData[i * 3 + n] > maxThresh.val[n] || hsvData[i * 3 + n] < minThresh.val[n])
@@ -176,10 +173,6 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
                     //Adding the pixels to the binary map
                     binaryMap.at(pixelCoord.val[0]).at(pixelCoord.val[1]) = 0;
                 }
-            }
-            if(calcSectors == true)
-            {
-
             }
         }
         else

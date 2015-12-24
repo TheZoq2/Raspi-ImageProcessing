@@ -7,6 +7,7 @@
 #include "Vec2.h"
 #include "ImgFunc.h" 
 #include "Flooder.h"
+#include "Array2d.h"
 
 #ifndef H_COLORTRACKER
 #define H_COLORTRACKER
@@ -21,7 +22,7 @@ public:
     
     Vec3 getObjectColor(); //Select the color in the center of the image
     Vec3 getColorInPixel(Vec2 pixel);
-    void generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddle, bool calcSectors = false);
+    void generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddle);
     void convertToHSV();
     void drawCircle(Vec2 pos, float radius, cv::Scalar color);
 
@@ -41,11 +42,12 @@ private:
     cv::Mat binaryImg; 
     
     std::vector< std::vector< int > > binaryMap;
+    
 
     bool isConverted;
 
-    int imgRows;
-    int imgCols;
+    std::size_t imgRows;
+    std::size_t imgCols;
     
     Vec2 middlePos;
 
