@@ -13,6 +13,7 @@ public:
     float getHitAngle();
     float getTargetAngle();
     Vec2 getWhiteBall();
+    Vec2 getTargetBall();
 private:
     static const float BALL_RADIUS;
     Vec2 whiteBall;

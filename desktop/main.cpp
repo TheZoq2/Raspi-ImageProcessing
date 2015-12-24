@@ -141,8 +141,6 @@ void mainLoop()
         captureNewImage();
 
 
-        performance.startMeassurement();
-
         //Colortracking
         ct.setImage(currentImage);
         ct.generateBinary(minColor, maxColor, true);
@@ -150,11 +148,6 @@ void mainLoop()
         //Getting the blob data from the trackers
         ct.generateBlobs();
         blobs = ct.getBlobs(60);
-
-        //Meassuring the time the function takes
-        performance.endMeassuremet();
-        performance.printResult();
-
 
         if(blobs.size() > 0)
         {
@@ -224,8 +217,8 @@ void mainLoop()
         Vec2 lineStart(lineLength * cos(hitAngle), lineLength * sin(hitAngle));
         Vec2 lineEnd(lineLength * cos(hitAngle + M_PI), lineLength * sin(hitAngle + M_PI));
 
-        Vec2 lineStart2(lineLength * cos(hitAngle), lineLength * sin(hitAngle));
-        Vec2 lineEnd2(lineLength * cos(hitAngle + M_PI), lineLength * sin(hitAngle + M_PI));
+        Vec2 lineStart2(lineLength * cos(pool.getTargetAngle()), lineLength * sin(pool.getTargetAngle()));
+        Vec2 lineEnd2(0,0);
 
         //Adding those coordinates to the location of the white ball
         Vec2 whitePos = coordinateConverter->convertFrom(pool.getWhiteBall());
@@ -233,9 +226,9 @@ void mainLoop()
         lineEnd += whitePos;
 
         //Adding those coordinates to the location of the white ball
-        Vec2 targetPos = coordinateConverter->convertFrom(pool.getWhiteBall());
-        lineStart += targetPos;
-        lineEnd += targetPos;
+        Vec2 targetPos = coordinateConverter->convertFrom(pool.getTargetBall());
+        lineStart2 += targetPos;
+        lineEnd2 += targetPos;
 
         cv::line(
                 currentImage, 
@@ -396,8 +389,10 @@ void runSelect(float x, float y)
         }
         case HOLE:
         {
-            float holeX = round(x * 2) / 2.0;
-            float holeY = round(y * 2) / 2.0;
+            Vec2 table = coordinateConverter->convertTo(Vec2(x, y));
+
+            float holeX = round(table.val[0] * 2) / 2.0;
+            float holeY = round(table.val[1] * 2) / 2.0;
 
             if(holeX < 0)
                 holeX = 0;
@@ -408,7 +403,7 @@ void runSelect(float x, float y)
             if(holeY > 0.5)
                 holeX = 0.5;
 
-            pool.setPocket(coordinateConverter->convertTo(Vec2(holeX, holeY)));
+            pool.setPocket(Vec2(holeX, holeY));
             selState = WHITE_BALL;
             state = PLAY;
             break;
