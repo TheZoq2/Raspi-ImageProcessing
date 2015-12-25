@@ -2,9 +2,7 @@
 
 #include <chrono>
 
-typedef std::chrono::high_resolution_clock Clock;
-
-Flooder::Flooder(std::vector< std::vector< int > > map)
+Flooder::Flooder(Array2d<bool> map)
 {
     mMap = map;
 }
@@ -12,24 +10,22 @@ Flooder::Flooder(std::vector< std::vector< int > > map)
 void Flooder::flood()
 {
     //Loop through the map
-    for(unsigned int x = 0; x < mMap.size(); x += 1)
+    for(unsigned int x = 0; x < mMap.getWidth(); x += 1)
     {
-        for(unsigned int y = 0; y < mMap[x].size(); y += 1)
+        for(unsigned int y = 0; y < mMap.getHeight(); y += 1)
         {
-            if(mMap[x][y] != 0)
+            if(mMap.at(x, y) != 0)
             {
                 //Start a search from that pixel
-                Blob searchResult = searchFrom(x, y, &mMap);
+                Blob searchResult = searchFrom(x, y);
 
                 mBlobs.push_back(searchResult);
-
-                int pixelPos = ImgFunc::getPixelStart(x, y, mMap.size(), mMap.at(x).size(), 1);
             }
         }
     }
 }
 
-Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > >* map)
+Flooder::Blob Flooder::searchFrom(int x, int y)
 {
     Blob result;
 
@@ -66,18 +62,18 @@ Flooder::Blob Flooder::searchFrom(int x, int y, std::vector< std::vector< int > 
                     
                     //Making sure the pixel is in bounds
                     if(
-                           nPixel.val[0] >= 0 && nPixel.val[0] < map->size() &&
-                           nPixel.val[1] >= 0 && nPixel.val[1] < map->at(nPixel.val[0]).size()
+                           nPixel.val[0] >= 0 && nPixel.val[0] < mMap.getWidth() &&
+                           nPixel.val[1] >= 0 && nPixel.val[1] < mMap.getHeight()
                       )
                     {
-                        if(map->at(nPixel.val[0]).at(nPixel.val[1]) == 1)
+                        if(mMap.at(nPixel.val[0], nPixel.val[1]) == true)
                         {
                             //add to the open list
                             openList.push(nPixel);
 
                             //Set the pixel to 0 to avoid finding the blob
                             //more than once
-                            map->at(nPixel.val[0]).at(nPixel.val[1]) = 0;
+                            mMap.at(nPixel.val[0], nPixel.val[1]) = false;
                         }
                     }
                 }

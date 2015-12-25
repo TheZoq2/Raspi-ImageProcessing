@@ -109,20 +109,9 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
 
     p.startMeassurement();
     //Clearing the vector
-    binaryMap.clear();
-
-
-    //Setting up the binary map
-    for(std::size_t x = 0; x < imgCols; x++)
-    {
-        std::vector< int > tmpVec;
-
-        binaryMap.push_back(tmpVec);
-        for(std::size_t y = 0; y < imgRows; y++)
-        {
-             binaryMap.at(x).push_back(1);
-        }
-    }
+    
+    binaryMap = Array2d<bool>(lastImg.cols, lastImg.rows);
+    binaryMap.initialiseAll(1);
 
     p.endMeassuremet();
     p.printResult();
@@ -168,10 +157,10 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
                 sumPos.val[0] += pixelCoord.val[0];
                 sumPos.val[1] += pixelCoord.val[1];
 
-                if(pixelCoord.val[0] > 0 && pixelCoord.val[0] < binaryMap.size() && pixelCoord.val[1] > 0 && pixelCoord.val[1] < binaryMap.at(pixelCoord.val[0]).size())
+                if(pixelCoord.val[0] > 0 && pixelCoord.val[0] < binaryMap.getWidth() && pixelCoord.val[1] > 0 && pixelCoord.val[1] < binaryMap.getHeight())
                 {
                     //Adding the pixels to the binary map
-                    binaryMap.at(pixelCoord.val[0]).at(pixelCoord.val[1]) = 0;
+                    binaryMap.at(pixelCoord.val[0], pixelCoord.val[1]) = false;
                 }
             }
         }

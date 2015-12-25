@@ -41,7 +41,8 @@ private:
     cv::Mat hsvImg;
     cv::Mat binaryImg; 
     
-    std::vector< std::vector< int > > binaryMap;
+    //std::vector< std::vector< int > > binaryMap;
+    Array2d<bool> binaryMap;
     
 
     bool isConverted;

@@ -8,6 +8,7 @@
 
 #include "Vec2.h"
 #include "ImgFunc.h"
+#include "Array2d.h"
 
 #ifndef H_FLOODER
 #define H_FLOODER
@@ -15,7 +16,7 @@
 class Flooder
 {
 public:
-    Flooder(std::vector< std::vector< int > > map);
+    Flooder(Array2d<bool> map);
 
     void flood();
     struct Blob
@@ -28,9 +29,9 @@ public:
     
     std::deque<Blob> getBlobs();
 private:
-    Blob searchFrom(int x, int y, std::vector< std::vector< int > >* map);
+    Blob searchFrom(int x, int y);
 
-    std::vector< std::vector< int > > mMap;
+    Array2d<bool> mMap;
 
     std::deque<Blob> mBlobs;
 };
