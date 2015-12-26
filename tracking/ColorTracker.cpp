@@ -110,7 +110,8 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
     p.startMeassurement();
     //Clearing the vector
     
-    binaryMap = Array2d<bool>(lastImg.cols, lastImg.rows);
+    //binaryMap = Array2d<bool>(lastImg.cols, lastImg.rows);
+    binaryMap.resize(lastImg.cols, lastImg.rows);
     binaryMap.initialiseAll(1);
 
     p.endMeassuremet();

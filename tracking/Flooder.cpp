@@ -69,11 +69,11 @@ Flooder::Blob Flooder::searchFrom(int x, int y)
                         if(mMap.at(nPixel.val[0], nPixel.val[1]) == true)
                         {
                             //add to the open list
-                            openList.push(nPixel);
+                            //openList.push(nPixel);
 
                             //Set the pixel to 0 to avoid finding the blob
                             //more than once
-                            mMap.at(nPixel.val[0], nPixel.val[1]) = false;
+                            //mMap.at(nPixel.val[0], nPixel.val[1]) = false;
                         }
                     }
                 }

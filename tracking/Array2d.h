@@ -3,6 +3,9 @@
 
 #include "Vec2.h"
 
+#include <stdexcept>
+#include <iostream>
+
 template<class T>
 class Array2d
 {
@@ -23,7 +26,9 @@ public:
     ~Array2d()
     {
         if(data == nullptr)
+        {
             delete[] data;
+        }
     }
     
     Array2d& operator=(const Array2d& other)
@@ -43,10 +48,12 @@ public:
     void resize(std::size_t width, std::size_t height)
     {
         if(data != nullptr)
-            data = nullptr;
+        {
             delete[] data;
+            data = nullptr;
+        }
 
-        this->data = new T[int(width * height)];
+        this->data = new T[width * height];
 
         this->width = width;
         this->height = height;
@@ -55,15 +62,20 @@ public:
     //Set all the data 
     void initialiseAll(T defaultValue) const
     {
-        for(std::size_t i = 0; i < width * height; ++i)
-        {
-            data[i] = defaultValue;
-        }
+        //for(std::size_t i = 0; i < width * height; ++i)
+        //{
+        //    data[i] = defaultValue;
+        //}
+        std::fill_n(data, width*height, defaultValue);
     }
     
-    T& at(int x, int y) const
+    T& at(std::size_t x, std::size_t y)
     {
-        return data[x*width + y];
+        if(x < 0 || x >= width || y < 0 || y >= height)
+        {
+            throw std::out_of_range("Coordinates out of range");
+        }
+        return data[(y - 1)*width + x];
     }
     T& at(Vec2 pos) const
     {
@@ -71,11 +83,11 @@ public:
     }
 
 
-    std::size_t getWidth()
+    std::size_t getWidth() const
     {
         return width;
     }
-    std::size_t getHeight()
+    std::size_t getHeight() const
     {
         return height;
     }
