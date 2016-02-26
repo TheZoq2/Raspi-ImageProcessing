@@ -7,11 +7,7 @@ set(CMAKE_BUILD_TYPE Debug)
 
 set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS} -g -ftest-coverage -fprofile-arcs -Wall -Wextra -Wno-unused -pedantic")
 
-set(SOURCES
-    main.cpp
-    CoordinateConverter.cpp
-    Performance.cpp
-    Pool.cpp
+set(LIB_SOURCES
     objectTracking/Flooder.h
     objectTracking/Flooder.cpp
     objectTracking/Vec3.cpp
@@ -24,7 +20,25 @@ set(SOURCES
     objectTracking/BinMap.cpp
     objectTracking/Vec2.h
     objectTracking/Vec2.cpp
+
+    Performance.cpp
     )
-add_executable( tracking ${SOURCES} )
-target_link_libraries( tracking ${OpenCV_LIBS} )
+
+set(LIB_NAME "TrackingCode")
+add_library(${LIB_NAME} ${LIB_SOURCES})
+
+set(POOL_SOURCES
+    poolMain.cpp
+    CoordinateConverter.cpp
+    Pool.cpp
+    )
+
+add_executable( pool ${POOL_SOURCES} )
+target_link_libraries( pool ${OpenCV_LIBS} ${LIB_NAME})
+
+set(TRACKING_SOURCES
+    main.cpp
+    )
+add_executable( tracking ${TRACKING_SOURCES} )
+target_link_libraries( tracking ${OpenCV_LIBS} ${LIB_NAME})
 
