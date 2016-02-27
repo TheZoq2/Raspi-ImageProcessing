@@ -38,6 +38,7 @@ target_link_libraries( pool ${OpenCV_LIBS} ${LIB_NAME})
 
 set(TRACKING_SOURCES
     main.cpp
+    Tracker.cpp
     )
 add_executable( tracking ${TRACKING_SOURCES} )
 target_link_libraries( tracking ${OpenCV_LIBS} ${LIB_NAME})

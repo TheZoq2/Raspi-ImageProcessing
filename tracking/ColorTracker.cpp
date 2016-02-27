@@ -203,7 +203,7 @@ void ColorTracker::generateBlobs()
 
     blobs = flooder.getBlobs();
 }
-std::deque< Flooder::Blob > ColorTracker::getBlobs(int minSize)
+std::vector< Flooder::Blob > ColorTracker::getBlobs(int minSize)
 {
     if(minSize == 0)
     {
@@ -211,7 +211,7 @@ std::deque< Flooder::Blob > ColorTracker::getBlobs(int minSize)
     }
     
     //Creating a new vector with the result
-    std::deque< Flooder::Blob > result;
+    std::vector< Flooder::Blob > result;
     for(unsigned int i = 0; i < blobs.size(); i++)
     {
         //Checking if the blob is big enough

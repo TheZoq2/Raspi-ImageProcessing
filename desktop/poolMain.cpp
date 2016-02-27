@@ -1,0 +1,412 @@
+#include <stdio.h>
+
+#include <iostream>
+#include <fstream>
+#include <opencv2/opencv.hpp>
+#include <time.h>
+#include <unistd.h>
+#include <memory>
+
+#include "poolConfig.h"
+
+#include "objectTracking/ColorTracker.h"
+#include "objectTracking/Flooder.h"
+#include "CoordinateConverter.h"
+#include "Pool.h"
+#include "Performance.h"
+
+
+enum PROGRAM_STATE
+{
+    WAIT_FOR_SELECT,
+    SELECT_PARAMETERS,
+    PLAY
+};
+PROGRAM_STATE state;
+
+enum SELECT_STATE
+{
+    WHITE_BALL,
+    TARGET,
+    HOLE
+};
+SELECT_STATE selState;
+
+#ifndef USE_VIDEO
+cv::VideoCapture camera(CAMERA_ID);
+#else
+cv::VideoCapture videoCapture("inputVideo.mp4");
+#endif
+
+Vec3 targetColor(29, 227, 218);
+Vec3 minColor;
+Vec3 maxColor;
+Vec3 redColor(1, 227, 218);
+Vec3 minRed;
+Vec3 maxRed;
+
+Vec3 threshold(30, 80, 80);
+
+std::vector< Flooder::Blob > blobs;
+
+bool running = true;
+
+//Used as a safe way of shutting down the program since ctrl+c doesn't stop
+//using the webcam
+void onMouse(int event, int x, int y, int, void*);
+void selectColor(int event, int x, int y, int , void*);
+void setMinMaxColor(Vec3 target, Vec3& minColor, Vec3& maxColor, Vec3 threshold);
+void captureNewImage();
+void runSelect(float x, float y);
+
+void mainLoop();
+
+std::unique_ptr<CoordinateConverter> coordinateConverter;
+
+cv::Mat currentImage;
+ColorTracker ct;
+
+Pool pool;
+
+Performance performance;
+
+int main()
+{
+    //Reading bounds of the table
+    std::ifstream boundFile;
+    boundFile.open("../data/bounds");
+
+    std::vector<Vec2> boundCoords;
+    for(int i = 0; i < 3; ++i)
+    {
+        float x, y;
+
+        boundFile >> x >> y;
+
+        boundCoords.push_back(Vec2(x, y));
+    }
+    coordinateConverter.reset(new CoordinateConverter(boundCoords));
+    
+    
+    cv::Mat ref;
+#ifndef USE_VIDEO
+    if(camera.isOpened() == false)
+    {
+        std::cout << "Failed to open camera" << std::endl;
+    }
+
+    //capture 1 image for use as reference
+    camera >> ref;
+#else
+    if(videoCapture.isOpened() == false)
+    {
+        std::cout << "Failed to open video, does the file exist?" << std::endl;
+    }
+    videoCapture >> ref;
+#endif
+
+    ColorTracker ct;
+    ct.setImage(ref);
+
+    //targetColor = ct.getObjectColor();
+    minColor = targetColor - threshold;
+    maxColor = targetColor + threshold;
+    minRed = redColor - threshold;
+    maxRed = redColor + threshold;
+
+    cv::namedWindow("GUI");
+    cv::setMouseCallback("GUI", onMouse);
+    cv::moveWindow("GUI", 0, 500);
+
+    cv::namedWindow("Threshold img");
+    cv::moveWindow("Threshold img", 800, 0);
+
+    cv::namedWindow("Display Image");
+    cv::setMouseCallback("Display Image", selectColor);
+    cv::moveWindow("Display Image", 100, 100);
+
+
+    while(running == true)
+    {
+        mainLoop();
+    }
+
+    return 0;
+}
+
+void mainLoop()
+{
+    if(state == WAIT_FOR_SELECT)
+    {
+        captureNewImage();
+
+
+        //Colortracking
+        ct.setImage(currentImage);
+        ct.generateBinary(minColor, maxColor, true);
+
+        //Getting the blob data from the trackers
+        ct.generateBlobs();
+        blobs = ct.getBlobs(60);
+
+        if(blobs.size() > 0)
+        {
+            int maxBlobSize = 0;
+            auto maxBlob= blobs.begin();
+            for(auto it = blobs.begin(); it != blobs.end(); ++it)
+            {
+                if(it->pixelAmount > maxBlobSize)
+                {
+                    maxBlobSize = it->pixelAmount;
+                    maxBlob= it;
+                }
+            }
+            blobs.erase(maxBlob);
+        }
+    }
+    else if(state == SELECT_PARAMETERS)
+    {
+        std::string instruction;
+
+        float offset = 0;
+        switch(selState)
+        {
+            case WHITE_BALL:
+                instruction = "Select white ball";
+                break;
+            case TARGET:
+                instruction = "Select target ball";
+                offset = 100;
+                break;
+            case HOLE:
+                instruction = "Select pocket";
+                offset = 200;
+                break;
+        }
+        cv::putText(currentImage, instruction, cv::Point(10, 100 + offset), cv::FONT_HERSHEY_DUPLEX, 1, cv::Scalar(255,0,255));
+    }
+    else if(state == PLAY)
+    {
+        //state = WAIT_FOR_SELECT;
+        captureNewImage();
+
+        //Colortracking
+        ct.setImage(currentImage);
+        ct.generateBinary(minColor, maxColor, true);
+
+        //Getting the blob data from the trackers
+        ct.generateBlobs();
+        blobs = ct.getBlobs(60);
+
+        int maxBlobSize = 0;
+        auto maxBlob= blobs.begin();
+        for(auto it = blobs.begin(); it != blobs.end(); ++it)
+        {
+            if(it->pixelAmount > maxBlobSize)
+            {
+                maxBlobSize = it->pixelAmount;
+                maxBlob= it;
+            }
+        }
+        blobs.erase(maxBlob);
+
+        //calculatng the line that we want to draw
+        const float lineLength = 100;
+        float hitAngle = pool.getHitAngle();
+
+        Vec2 lineStart(lineLength * cos(hitAngle), lineLength * sin(hitAngle));
+        Vec2 lineEnd(lineLength * cos(hitAngle + M_PI), lineLength * sin(hitAngle + M_PI));
+
+        Vec2 lineStart2(lineLength * cos(pool.getTargetAngle()), lineLength * sin(pool.getTargetAngle()));
+        Vec2 lineEnd2(0,0);
+
+        //Adding those coordinates to the location of the white ball
+        Vec2 whitePos = coordinateConverter->convertFrom(pool.getWhiteBall());
+        lineStart += whitePos;
+        lineEnd += whitePos;
+
+        //Adding those coordinates to the location of the white ball
+        Vec2 targetPos = coordinateConverter->convertFrom(pool.getTargetBall());
+        lineStart2 += targetPos;
+        lineEnd2 += targetPos;
+
+        cv::line(
+                currentImage, 
+                cv::Point(lineStart.val[0], lineStart.val[1]), 
+                cv::Point(lineEnd.val[0], lineEnd.val[1]),
+                cv::Scalar(0,0,255),
+                2,
+                CV_AA
+                );
+        cv::line(
+                currentImage, 
+                cv::Point(lineStart2.val[0], lineStart2.val[1]), 
+                cv::Point(lineEnd2.val[0], lineEnd2.val[1]),
+                cv::Scalar(255,0,0),
+                2,
+                CV_AA
+                );
+    }
+
+    for(unsigned int i = 0; i < blobs.size(); i++)
+    {
+        ct.drawCircle(blobs.at(i).center, 5, cv::Scalar(255, 0, 0));
+    }   
+    
+    //Drawing the bounds
+    for(int i = 0; i < 3; i++)
+    {
+        Vec2 pos = coordinateConverter->getCorner(i);
+        cv::circle(currentImage, cv::Point(pos.val[0], pos.val[1]), 5, cv::Scalar(20, 30,255), -1, 8);
+    }
+
+    cv::Mat displayImage = currentImage;
+
+    if(state == PLAY)
+    {
+        cv::resize(currentImage, displayImage, cv::Size(1280, 1024));
+    }
+    
+    cv::imshow("Threshold img", ct.getBinary());
+    cv::imshow("Display Image", displayImage);
+
+    cv::waitKey(1);
+}
+
+void onMouse(int event, int x, int y, int, void*)
+{
+    if(event != 1)
+    {
+        return;
+    }
+    
+    //Exiting the program
+    running = false;
+}
+
+void selectColor(int event, int x, int y, int, void*)
+{
+    if(event == CV_EVENT_RBUTTONDOWN) //If this isn't a left click
+    {
+        //Create a color tracker to get the color
+        ColorTracker ct;
+        ct.setImage(currentImage);
+
+        redColor = ct.getColorInPixel(Vec2(x, y));
+        
+        //Recalculating the threshold
+        setMinMaxColor(redColor, minColor, maxColor, threshold);
+
+        std::cout << x << "  " << y << std::endl;
+    }
+    else if(event == CV_EVENT_LBUTTONDOWN)
+    {
+        if(state == WAIT_FOR_SELECT || state == PLAY) 
+        {
+            state = SELECT_PARAMETERS;
+        }
+        else if(state == SELECT_PARAMETERS)
+        {
+            state = SELECT_PARAMETERS;
+            runSelect(x, y);
+        }
+    }
+    else
+    {
+    }
+}
+
+
+void setMinMaxColor(Vec3 target, Vec3& minColor, Vec3& maxColor, Vec3 threshold)
+{
+    minColor = target - threshold;
+    maxColor = target + threshold;
+}
+
+void captureNewImage()
+{
+    cv::Mat img;
+#ifndef USE_VIDEO
+    camera >> img;
+#else
+    //videoCapture >> img;
+    //img = cv::imdecode(videoCapture, 0);
+    //img = videoCapture.retrieve(img);
+
+    videoCapture >> img;
+
+    cv::resize(img, img, cv::Size(640, 480));
+#endif
+    //Fix fisheye problems
+    cv::Mat tmpImg;
+
+    //Read fisheye correction stuff from a file. Generate using the "cpp/calibration" sample
+    cv::Mat camera_matrix, distortion;
+    cv::FileStorage fs("../data/fisheye0.txt", cv::FileStorage::READ);
+    cv::FileNode fn = fs["IntParam"];
+    fn["camera_matrix"] >> camera_matrix;
+    fn["distortion_coefficients"] >> distortion;
+
+    cv::undistort(img, tmpImg, camera_matrix, distortion);
+
+    cv::resize(tmpImg, img, cv::Size(640, 480));
+
+    currentImage = img;
+}
+
+void runSelect(float x, float y)
+{
+    //Finding the closest ball
+    float minBlobDistance = 10000000000;
+    auto closestBlob = blobs.begin();
+    for(auto it = blobs.begin(); it != blobs.end(); ++it)
+    {
+        Vec2 diff = it->center - Vec2(x, y);
+
+        if(diff.getLength() < minBlobDistance)
+        {
+            closestBlob = it;
+            minBlobDistance = diff.getLength();
+        }
+    }
+
+    Vec2 closestCenter = coordinateConverter->convertTo(closestBlob->center);
+
+    switch(selState) 
+    {
+        case WHITE_BALL:
+        {
+            pool.setWhiteBall(closestCenter);
+            selState = TARGET;
+            break;
+        }
+        case TARGET:
+        {
+            pool.setTargetBall(closestCenter);
+
+            selState = HOLE;
+            break;
+        }
+        case HOLE:
+        {
+            Vec2 table = coordinateConverter->convertTo(Vec2(x, y));
+
+            float holeX = round(table.val[0] * 2) / 2.0;
+            float holeY = round(table.val[1] * 2) / 2.0;
+
+            if(holeX < 0)
+                holeX = 0;
+            if(holeX > 1)
+                holeX = 1;
+            if(holeY < 0)
+                holeY = 0;
+            if(holeY > 0.5)
+                holeX = 0.5;
+
+            pool.setPocket(Vec2(holeX, holeY));
+            selState = WHITE_BALL;
+            state = PLAY;
+            break;
+        }
+    }
+}

@@ -35,7 +35,7 @@ public:
     Vec2 getMiddlePos();
 
     cv::Mat getBinary();
-    std::deque< Flooder::Blob > getBlobs(int minSize);
+    std::vector< Flooder::Blob > getBlobs(int minSize);
 private:
     cv::Mat lastImg;
     cv::Mat hsvImg;
@@ -57,6 +57,6 @@ private:
     int** sectors;
     bool hasSectors;
 
-    std::deque< Flooder::Blob > blobs;
+    std::vector< Flooder::Blob > blobs;
 };
 #endif

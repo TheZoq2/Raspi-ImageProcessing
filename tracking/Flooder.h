@@ -1,5 +1,4 @@
 #include <vector>
-#include <deque>
 #include <queue>
 #include <stdlib.h>
 #include <iostream>
@@ -27,12 +26,12 @@ public:
         int pixelAmount;
     };
     
-    std::deque<Blob> getBlobs();
+    std::vector<Blob> getBlobs();
 private:
     Blob searchFrom(int x, int y);
 
-    Array2d<bool> mMap;
+    Array2d<bool> map;
 
-    std::deque<Blob> mBlobs;
+    std::vector<Blob> blobs;
 };
 #endif
