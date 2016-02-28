@@ -6,18 +6,13 @@ ColorTracker::ColorTracker()
     
 }
 
-/*void ColorTracker::piGrabImage(raspicam::RaspiCam_Cv* camera)
+//TODO: Implement
+void ColorTracker::runTracker() 
 {
-    //Grabbing an image from the camera
-    camera->grab();
-    camera->retrieve(lastImg);
+    //generateBinary();
+    //generateBlobs();
+}
 
-    //Storing data from the image now to save time in the future
-    imgRows = lastImg.rows;
-    imgCols = lastImg.cols;
-
-    isConverted = false;
-}*/
 void ColorTracker::setImage(cv::Mat img)
 {
    lastImg.create(img.rows, img.cols, CV_8UC3);

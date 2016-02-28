@@ -26,6 +26,8 @@ public:
     void convertToHSV();
     void drawCircle(Vec2 pos, float radius, cv::Scalar color);
 
+    void runTracker();
+
     void saveImage(std::string filename);
     void saveBinary(std::string filename);
     void saveHSV(std::string filename);

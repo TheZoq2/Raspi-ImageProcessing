@@ -16,7 +16,11 @@ void Tracker::loop()
     captureNewImage();
 
     cv::imshow("Camera", currentImage);
-    
+
+    ct.setImage(currentImage);
+
+    ct.runTracker();
+
     //Update UI stuff
     cv::waitKey(1);
 }
@@ -39,6 +43,10 @@ void Tracker::captureNewImage()
     camera >> currentImage;
 #endif
 }
+
+/*
+ * Event handler for when the 'GUI' window is clicked
+ */
 void Tracker::onMouseGUI(int event, int x, int y, int a, void* this_)
 {
     if(event == 1)
@@ -47,3 +55,14 @@ void Tracker::onMouseGUI(int event, int x, int y, int a, void* this_)
     }
 }
 
+
+/*
+ * Event handler for when the camera window is clicked
+ */
+void Tracker::onMouseCamera(int event, int x, int y, int a, void* this_)
+{
+    if(event == 1)
+    {
+        ((Tracker*)this_)->done = true;
+    }
+}

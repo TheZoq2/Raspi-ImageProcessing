@@ -28,6 +28,7 @@ public:
     bool isDone();
 private:
     static void onMouseGUI(int event, int x, int y, int, void* this_);
+    static void onMouseCamera(int event, int x, int y, int, void* this_);
 
     void captureNewImage();
 
