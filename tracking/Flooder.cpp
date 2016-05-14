@@ -4,20 +4,20 @@
 
 Flooder::Flooder(Array2d<bool> map)
 {
-    map = map;
+    this->map = map;
 }
 
-void Flooder::flood()
+void Flooder::flood(bool target)
 {
     //Loop through the map
     for(unsigned int x = 0; x < map.getWidth(); x += 1)
     {
         for(unsigned int y = 0; y < map.getHeight(); y += 1)
         {
-            if(map.at(x, y) != 0)
+            if(map.at(x, y) == target)
             {
                 //Start a search from that pixel
-                Blob searchResult = searchFrom(x, y);
+                Blob searchResult = searchFrom(x, y, target);
 
                 blobs.push_back(searchResult);
             }
@@ -69,11 +69,11 @@ Flooder::Blob Flooder::searchFrom(int x, int y)
                         if(map.at(nPixel.val[0], nPixel.val[1]) == true)
                         {
                             //add to the open list
-                            //openList.push(nPixel);
+                            openList.push(nPixel);
 
                             //Set the pixel to 0 to avoid finding the blob
                             //more than once
-                            //map.at(nPixel.val[0], nPixel.val[1]) = false;
+                            map.at(nPixel.val[0], nPixel.val[1]) = false;
                         }
                     }
                 }

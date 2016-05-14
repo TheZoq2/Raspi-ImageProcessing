@@ -8,6 +8,8 @@ void Tracker::setup()
     
     cv::namedWindow("Camera");
     cv::moveWindow("Camera", 500, 250);
+
+    //camera.set(CV_CAP_PROP_BRIGHTNESS , 100);
 }
 
 void Tracker::loop() 
@@ -20,7 +22,15 @@ void Tracker::loop()
     ct.setImage(currentImage);
 
     ct.runTracker();
+    cv::imshow("Binary", ct.getBinary());
+    
+    std::vector< Flooder::Blob > foundBlobs = ct.getBlobs(100);
 
+    std::cout << foundBlobs.size() << std::endl;
+    for(auto blob : foundBlobs) 
+    {
+        std::cout<< blob.center.getString() << std::endl;
+    }
     //Update UI stuff
     cv::waitKey(1);
 }

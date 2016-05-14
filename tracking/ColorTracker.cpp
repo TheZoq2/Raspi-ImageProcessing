@@ -9,61 +9,24 @@ ColorTracker::ColorTracker()
 //TODO: Implement
 void ColorTracker::runTracker() 
 {
-    //generateBinary();
-    //generateBlobs();
+    generateBinary(Vec3(0,0,110), Vec3(255,255,255), false);
+    generateBlobs();
 }
 
 void ColorTracker::setImage(cv::Mat img)
 {
-   lastImg.create(img.rows, img.cols, CV_8UC3);
-   lastImg.data = img.data;
+    lastImg.create(img.rows, img.cols, CV_8UC3);
+    lastImg.data = img.data;
 
-   imgRows = lastImg.rows;
-   imgCols = lastImg.cols;
+    imgRows = lastImg.rows;
+    imgCols = lastImg.cols;
 
-   isConverted = false;
+    isConverted = false;
 }
 
 Vec3 ColorTracker::getObjectColor()
 {
     return getColorInPixel(Vec2(imgRows / 2, imgCols / 2));
-    /*
-    Vec3 result;
-
-    //Convert to HSV
-    convertToHSV();
-    uint8_t* hsvData = hsvImg.data;
-    
-    Vec3 colorSum;
-    
-    //Calculating the average color of the object
-    int avgSize = 5;
-    for(int x = -avgSize; x <= avgSize; x++)
-    {
-        for(int y = -avgSize; y <= avgSize; y++)
-        {
-            int pixelX = x + imgRows / 2;
-            int pixelY = y + imgRows / 2;
-            //std::cout << "processing pixel: " << x << ", " << y << std::endl;
-            Vec3 pixel = ImgFunc::getPixel(hsvData, pixelX, pixelY, imgRows, imgCols, 3);
-
-            //Going through all the pixels
-            for(int i = 0; i < 3; i++)
-            {
-                colorSum.val[i] += pixel.val[i];
-            }
-        }
-    }
-
-    int avgSearchAmount = pow(avgSize * 2 + 1, 2);
-
-    for(int i = 0; i < 3; i++)
-    {
-        result.val[i] = colorSum.val[i] / avgSearchAmount;
-    }
-
-    return result;
-    */
 }
 Vec3 ColorTracker::getColorInPixel(Vec2 pixel)
 {
@@ -99,7 +62,6 @@ Vec3 ColorTracker::getColorInPixel(Vec2 pixel)
 }
 void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddle)
 {
-    
     Performance p;
 
     p.startMeassurement();
@@ -107,7 +69,7 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
     
     //binaryMap = Array2d<bool>(lastImg.cols, lastImg.rows);
     binaryMap.resize(lastImg.cols, lastImg.rows);
-    binaryMap.initialiseAll(1);
+    binaryMap.initialiseAll(0);
 
     p.endMeassuremet();
     p.printResult();
@@ -116,7 +78,6 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
     binaryImg.create(cv::Size(lastImg.cols, lastImg.rows), CV_8UC1);
 
     //Converting the image to HSV
-    //cv::cvtColor(lastImg, hsvImg, CV_BGR2HSV);
     convertToHSV();
 
     //Getting the data
@@ -133,7 +94,6 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
         bool inBounds = true;
         for(std::size_t n = 0; n < 3; ++n)
         {
-            //std::cout << "Searching pixel pos: " << i*3+n << std::endl;
             if(hsvData[i * 3 + n] > maxThresh.val[n] || hsvData[i * 3 + n] < minThresh.val[n])
             {
                 inBounds = false;
@@ -145,20 +105,18 @@ void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddl
         {
             binaryData[i] = 255;
 
-            if(calcMiddle == true) //If the avg middlepoint should be calculated
+            pixelsFound++;
+
+            Vec2 pixelCoord = ImgFunc::getCoordsFromPixel(i, imgRows, imgCols);
+            sumPos.val[0] += pixelCoord.val[0];
+            sumPos.val[1] += pixelCoord.val[1];
+
+            if(pixelCoord.val[0] > 0 && pixelCoord.val[0] < binaryMap.getWidth() && pixelCoord.val[1] > 0 && pixelCoord.val[1] < binaryMap.getHeight())
             {
-                pixelsFound++;
-
-                Vec2 pixelCoord = ImgFunc::getCoordsFromPixel(i, imgRows, imgCols);
-                sumPos.val[0] += pixelCoord.val[0];
-                sumPos.val[1] += pixelCoord.val[1];
-
-                if(pixelCoord.val[0] > 0 && pixelCoord.val[0] < binaryMap.getWidth() && pixelCoord.val[1] > 0 && pixelCoord.val[1] < binaryMap.getHeight())
-                {
-                    //Adding the pixels to the binary map
-                    binaryMap.at(pixelCoord.val[0], pixelCoord.val[1]) = false;
-                }
+                //Adding the pixels to the binary map
+                binaryMap.at(pixelCoord.val[0], pixelCoord.val[1]) = true;
             }
+        
         }
         else
         {
@@ -189,12 +147,9 @@ void ColorTracker::convertToHSV()
 }
 void ColorTracker::generateBlobs()
 {
-    //std::cout << "Setting image" << std::endl;
     //Creating a new flooder
     Flooder flooder(binaryMap);
-    //std::cout << "Set flooder img" << std::endl;
     flooder.flood();
-    //std::cout << "Finished flood" << std::endl;
 
     blobs = flooder.getBlobs();
 }

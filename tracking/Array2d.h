@@ -34,7 +34,7 @@ public:
     Array2d& operator=(const Array2d& other)
     {
         //Resize takes care of deallocation
-        resize(other.width, other.height);
+        this->resize(other.width, other.height);
 
         //Copy all the data aswell
         for(std::size_t i = 0; i < width * height; ++i)
@@ -75,7 +75,7 @@ public:
         {
             throw std::out_of_range("Coordinates out of range");
         }
-        return data[(y - 1)*width + x];
+        return data[(y)*width + x];
     }
     T& at(Vec2 pos) const
     {

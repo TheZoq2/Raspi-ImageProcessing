@@ -23,8 +23,6 @@ public:
     void setup();
     void loop();
 
-
-
     bool isDone();
 private:
     static void onMouseGUI(int event, int x, int y, int, void* this_);
