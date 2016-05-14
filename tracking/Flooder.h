@@ -17,7 +17,7 @@ class Flooder
 public:
     Flooder(Array2d<bool> map);
 
-    void flood();
+    void flood(bool target);
     struct Blob
     {
         Vec2 center;
@@ -28,7 +28,7 @@ public:
     
     std::vector<Blob> getBlobs();
 private:
-    Blob searchFrom(int x, int y);
+    Blob searchFrom(int x, int y, bool target);
 
     Array2d<bool> map;
 

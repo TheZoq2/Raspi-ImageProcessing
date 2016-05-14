@@ -32,7 +32,7 @@ public:
     void saveBinary(std::string filename);
     void saveHSV(std::string filename);
 
-    void generateBlobs();
+    void generateBlobs(bool target);
 
     Vec2 getMiddlePos();
 

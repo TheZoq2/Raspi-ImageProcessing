@@ -24,7 +24,7 @@ void Tracker::loop()
     ct.runTracker();
     cv::imshow("Binary", ct.getBinary());
     
-    std::vector< Flooder::Blob > foundBlobs = ct.getBlobs(100);
+    std::vector< Flooder::Blob > foundBlobs = ct.getBlobs(150);
 
     std::cout << foundBlobs.size() << std::endl;
     for(auto blob : foundBlobs) 

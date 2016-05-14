@@ -10,7 +10,7 @@ ColorTracker::ColorTracker()
 void ColorTracker::runTracker() 
 {
     generateBinary(Vec3(0,0,110), Vec3(255,255,255), false);
-    generateBlobs();
+    generateBlobs(false);
 }
 
 void ColorTracker::setImage(cv::Mat img)
@@ -145,11 +145,11 @@ void ColorTracker::convertToHSV()
 
     isConverted = true;
 }
-void ColorTracker::generateBlobs()
+void ColorTracker::generateBlobs(bool target)
 {
     //Creating a new flooder
     Flooder flooder(binaryMap);
-    flooder.flood();
+    flooder.flood(target);
 
     blobs = flooder.getBlobs();
 }
