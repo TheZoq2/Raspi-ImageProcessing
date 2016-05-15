@@ -25,7 +25,7 @@ public:
     }
     ~Array2d()
     {
-        if(data == nullptr)
+        if(data != nullptr)
         {
             delete[] data;
         }

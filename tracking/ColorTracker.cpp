@@ -6,10 +6,9 @@ ColorTracker::ColorTracker()
     
 }
 
-//TODO: Implement
 void ColorTracker::runTracker() 
 {
-    generateBinary(Vec3(0,0,110), Vec3(255,255,255), false);
+    generateBinary(Vec3(0,0,80), Vec3(255,130,255), false);
     generateBlobs(false);
 }
 
@@ -62,17 +61,11 @@ Vec3 ColorTracker::getColorInPixel(Vec2 pixel)
 }
 void ColorTracker::generateBinary(Vec3 minThresh, Vec3 maxThresh, bool calcMiddle)
 {
-    Performance p;
-
-    p.startMeassurement();
-    //Clearing the vector
     
     //binaryMap = Array2d<bool>(lastImg.cols, lastImg.rows);
     binaryMap.resize(lastImg.cols, lastImg.rows);
     binaryMap.initialiseAll(0);
 
-    p.endMeassuremet();
-    p.printResult();
 
     //binaryImg.create(cv::Size(imgRows, imgCols), CV_8UC1);
     binaryImg.create(cv::Size(lastImg.cols, lastImg.rows), CV_8UC1);
